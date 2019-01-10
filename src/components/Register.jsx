@@ -21,11 +21,11 @@ class Register extends Component {
         password: true,
         confirmPassword: true
       },
-      showErrors: false
+      showErrors: false,
+      user: null
     }
   }
 
-  const token = localStorage.getItem('token');
 
   handleChange = (event) => {
     this.setState({
@@ -66,25 +66,35 @@ class Register extends Component {
           headers: headers,
           form: body
       }
-
       // Start the request
-      request(options, function (error, response, body) {
+      let currentUser = 'none';
+
+      request(options, function (error, response, respBody) {
 
           if (!error) {
             // Print out the response body
-            console.log(JSON.parse(body))
+            console.log(JSON.parse(respBody))
 
-            let token = JSON.parse(body).token
+            let token = JSON.parse(respBody).token
             console.log(token)
 
             if (token){
               localStorage.setItem('token', token)
             }
+
+            let user = JSON.parse(respBody).user
+            console.log(user)
+
+            this.props.setUser({user: user})
           }
-      })
+      }.bind(this))
     }
   }
 
+  passUser = (user) => {
+    debugger
+    this.props.setUser(user)
+  }
 
   checkFieldsAreFilled = () => {
     for (const key in this.state.emptyFields){
@@ -108,35 +118,37 @@ class Register extends Component {
 
 
   render(){
-    if (token){
-      return <Redirect push to={'/roster'}/>
-    } else {
-        return(
-          <div>Register!
-          {this.state.showErrors ? <RegistrationErrors errors={this.state.emptyFields}/> : null}
+    console.log(this.props)
+    if (localStorage.getItem('token')){
+      return <Redirect to='/roster'/>
+    }
+    else {
+      return(
+        <div>Register!
+        {this.state.showErrors ? <RegistrationErrors errors={this.state.emptyFields}/> : null}
 
-          <form id="register"
-          onSubmit={this.submitRegistration}>
+        <form id="register"
+        onSubmit={this.submitRegistration}>
 
-          <label>First Name: </label>
-          <input type="text" id="firstName" name="firstName" placeholder="First Name" onChange={this.handleChange}></input>
+        <label>First Name: </label>
+        <input type="text" id="firstName" name="firstName" placeholder="First Name" onChange={this.handleChange}></input>
 
-          <label>Last Name: </label>
-          <input type="text" id="lastName" name="lastName" placeholder="Last Name" onChange={this.handleChange}></input>
+        <label>Last Name: </label>
+        <input type="text" id="lastName" name="lastName" placeholder="Last Name" onChange={this.handleChange}></input>
 
-          <label>Email: </label>
-          <input type="text" id="email" name="email" placeholder="Email" onChange={this.handleChange}></input>
+        <label>Email: </label>
+        <input type="text" id="email" name="email" placeholder="Email" onChange={this.handleChange}></input>
 
-          <label>Password: </label>
-          <input type="text" id="password" name="password" placeholder="Password" onChange={this.handleChange}></input>
+        <label>Password: </label>
+        <input type="text" id="password" name="password" placeholder="Password" onChange={this.handleChange}></input>
 
-          <label>Confirm Password: </label>
-          <input type="text" id="confirmPassword" name="confirmPassword" placeholder="Confirm Password" onChange={this.handleChange}></input>
+        <label>Confirm Password: </label>
+        <input type="text" id="confirmPassword" name="confirmPassword" placeholder="Confirm Password" onChange={this.handleChange}></input>
 
-          <input type="submit"/>
-          </form>
-          </div>
-        )
+        <input type="submit"/>
+        </form>
+        </div>
+      )
     }
   }
 }
