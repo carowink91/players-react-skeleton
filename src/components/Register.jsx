@@ -1,5 +1,9 @@
 import React, { Component } from 'react';
 import RegistrationErrors from './RegistrationErrors';
+import { fetchPostNewUser } from '../Fetches';
+import axios from 'axios';
+import request from 'request';
+import { Redirect } from 'react-router-dom';
 
 class Register extends Component {
   constructor(props){
@@ -21,6 +25,8 @@ class Register extends Component {
     }
   }
 
+  const token = localStorage.getItem('token');
+
   handleChange = (event) => {
     this.setState({
       [event.target.name]: event.target.value
@@ -40,8 +46,45 @@ class Register extends Component {
     // check all fields are filled and passwords match
     if (this.checkFieldsAreFilled() && this.checkPasswordMatch()){
       console.log("all good")
+      console.log(this.state.password + " " + this.state.confirmPassword)
+      let body = {
+        "first_name": this.state.firstName,
+        "last_name": this.state.lastName,
+        "email": this.state.email,
+        "password": this.state.password,
+        "confirm_password": this.state.confirmPassword
+      }
+
+      let headers = {
+        'Content-Type':'application/json'
+      }
+
+      // Configure the request
+      let options = {
+          url: `https://players-api.developer.alchemy.codes/api/user`,
+          method: 'POST',
+          headers: headers,
+          form: body
+      }
+
+      // Start the request
+      request(options, function (error, response, body) {
+
+          if (!error) {
+            // Print out the response body
+            console.log(JSON.parse(body))
+
+            let token = JSON.parse(body).token
+            console.log(token)
+
+            if (token){
+              localStorage.setItem('token', token)
+            }
+          }
+      })
     }
   }
+
 
   checkFieldsAreFilled = () => {
     for (const key in this.state.emptyFields){
@@ -65,12 +108,15 @@ class Register extends Component {
 
 
   render(){
-    return(
-      <div>Register!
-        {this.state.showErrors ? <RegistrationErrors errors={this.state.emptyFields}/> : null}
+    if (token){
+      return <Redirect push to={'/roster'}/>
+    } else {
+        return(
+          <div>Register!
+          {this.state.showErrors ? <RegistrationErrors errors={this.state.emptyFields}/> : null}
 
-        <form id="register"
-              onSubmit={this.submitRegistration}>
+          <form id="register"
+          onSubmit={this.submitRegistration}>
 
           <label>First Name: </label>
           <input type="text" id="firstName" name="firstName" placeholder="First Name" onChange={this.handleChange}></input>
@@ -88,9 +134,10 @@ class Register extends Component {
           <input type="text" id="confirmPassword" name="confirmPassword" placeholder="Confirm Password" onChange={this.handleChange}></input>
 
           <input type="submit"/>
-        </form>
-      </div>
-    )
+          </form>
+          </div>
+        )
+    }
   }
 }
 
