@@ -39,10 +39,11 @@ class Roster extends Component {
     this.props.history.push('/player/new')
   }
 
+
   render(){
     if (!localStorage.getItem('token')){
       return <Redirect to='/'/>
-    }
+    } else {
     return(
       <div>
         <h3>Your Roster</h3>
@@ -52,9 +53,11 @@ class Roster extends Component {
         )}
 
         <button onClick={this.handleClick}>add new player</button>
+        <button onClick={this.props.logout}>Logout</button>
       </div>
     )
   }
+}
 }
 
 export default Roster;

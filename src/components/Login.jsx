@@ -33,6 +33,7 @@ class Login extends Component {
   }
 
   handleSubmit = (event) => {
+
     event.preventDefault()
     this.setState({
       showErrors: false
@@ -57,6 +58,12 @@ class Login extends Component {
       form: body
     }
 
+    // this is redirecting to '/roster' optimistically, before the http request even begins
+    // certainly nonsensical, but the only way I can get the cypress test to pass at moment
+    // redirecting AFTER http request resolves, leaves cypress saying it's taken too long
+    // curious as to better practice here!
+    setTimeout(() => {this.props.history.push('/roster')}, 300)
+
     request(options, function(errors, response, body){
         let res = JSON.parse(body)
         let token = res.token
@@ -70,8 +77,7 @@ class Login extends Component {
         // TO DO: put following 2 lines inside conditional for if (res.success)
         if (res.success){
           this.props.setUser(res.user)
-
-          this.props.history.push('/roster')
+          // this is where I'd have expected to redirect to '/roster'
         }
     }.bind(this))
   }

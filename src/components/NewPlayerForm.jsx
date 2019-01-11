@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import request from 'request';
+import { Redirect } from 'react-router-dom';
+
 
 class NewPlayerForm extends Component {
   constructor(props){
@@ -84,7 +86,15 @@ class NewPlayerForm extends Component {
     }.bind(this))
   }
 
+  cancel = () => {
+    this.props.history.push('/roster');
+  }
+
   render(){
+    if (!localStorage.getItem('token')){
+      return <Redirect to='/'/>
+    }
+    else {
     return(
       <div>
         <h3>New Player Form</h3>
@@ -107,9 +117,13 @@ class NewPlayerForm extends Component {
 
           <input type="submit" id="create"/>
         </form>
+
+        <button onClick={this.cancel}>Cancel</button>
+        <button onClick={this.props.logout}>Logout</button>
       </div>
     )
   }
+}
 }
 
 export default NewPlayerForm;

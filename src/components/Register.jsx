@@ -86,6 +86,8 @@ class Register extends Component {
               console.log(user)
 
               this.props.setUser({user: user})
+              this.props.history.push('/roster')
+              
             }
 
           }
@@ -148,7 +150,7 @@ class Register extends Component {
           <label>Confirm Password: </label>
           <input type="text" id="confirmPassword" name="confirmPassword" placeholder="Confirm Password" onChange={this.handleChange}/>
 
-          <input type="submit"/>
+          <input type="submit" id="register"/>
           </form>
         </div>
       )

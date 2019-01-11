@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
+import { BrowserRouter as Router, Switch, Route, withRouter } from 'react-router-dom';
 import Home from './Home';
 import Login from './Login';
 import Register from './Register';
@@ -26,8 +26,13 @@ class App extends Component {
     debugger
   }
 
+  logout = () => {
+    localStorage.clear();
+    this.props.history.push('/');
+  }
 
   render(){
+    console.log(this.props)
     return(
       <Router>
         <Switch>
@@ -44,11 +49,13 @@ class App extends Component {
 
           <Route exact path='/roster' render={(props) =>
                 <Roster {...props}
-                  user={this.state.user}/>}/>
+                  user={this.state.user}
+                  logout={this.logout}/>}/>
 
           <Route exact path='/player/new' render={(props) =>
                 <NewPlayerForm {...props}
-                  addNewPlayer={this.addNewPlayer}/>}/>
+                  addNewPlayer={this.addNewPlayer}
+                  logout={this.logout}/>}/>
 
         </Switch>
       </Router>
@@ -56,4 +63,4 @@ class App extends Component {
   }
 }
 
-export default App;
+export default withRouter(App);
