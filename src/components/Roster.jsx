@@ -4,6 +4,9 @@ import request from 'request';
 class Roster extends Component {
   constructor(props){
     super(props);
+    this.state={
+      players: null
+    }
   }
 
   componentDidMount(){
@@ -20,17 +23,32 @@ class Roster extends Component {
     }
 
     request(options, function(error, response, body){
-      if (!error){
+
         console.log(JSON.parse(body))
-        console.log(JSON.parse(body).players)
-      }
-    })
+        let players = JSON.parse(body).players
+        console.log(players[0])
+        this.setState({
+          players: players
+        })
+
+    }.bind(this))
   }
 
+  handleClick = () => {
+
+  }
 
   render(){
     return(
-      <div>Roster page!</div>
+      <div>
+        <h3>Your Roster</h3>
+
+        {!this.state.players ? null : this.state.players.map((player, index) =>
+          <li key={index}>{player.last_name}, {player.first_name}: Rating - {player.rating} | Handedness - {player.handedness}</li>
+        )}
+
+        <button onClick={this.handleClick}>add new player</button>
+      </div>
     )
   }
 }
