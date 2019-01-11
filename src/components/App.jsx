@@ -5,6 +5,7 @@ import Login from './Login';
 import Register from './Register';
 import Roster from './Roster';
 import request from 'request';
+import NewPlayerForm from './NewPlayerForm';
 
 class App extends Component {
   constructor(){
@@ -21,7 +22,9 @@ class App extends Component {
     })
   }
 
-  
+  addNewPlayer = () => {
+    debugger
+  }
 
 
   render(){
@@ -42,6 +45,10 @@ class App extends Component {
           <Route exact path='/roster' render={(props) =>
                 <Roster {...props}
                   user={this.state.user}/>}/>
+
+          <Route exact path='/player/new' render={(props) =>
+                <NewPlayerForm {...props}
+                  addNewPlayer={this.addNewPlayer}/>}/>
 
         </Switch>
       </Router>

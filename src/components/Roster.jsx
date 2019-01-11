@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import request from 'request';
+import { Redirect } from 'react-router-dom';
 
 class Roster extends Component {
   constructor(props){
@@ -35,10 +36,13 @@ class Roster extends Component {
   }
 
   handleClick = () => {
-
+    this.props.history.push('/player/new')
   }
 
   render(){
+    if (!localStorage.getItem('token')){
+      return <Redirect to='/'/>
+    }
     return(
       <div>
         <h3>Your Roster</h3>

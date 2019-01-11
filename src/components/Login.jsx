@@ -40,7 +40,7 @@ class Login extends Component {
     //check that all fields are filled
     if (this.checkFieldsAreFilled()){
       //then submit form
-      this.login()
+      this.login();
     }
   }
 
@@ -66,9 +66,13 @@ class Login extends Component {
 
         // store jwt in localStorage
         localStorage.setItem('token', token)
-        this.props.setUser(res.user)
-        
-        this.props.history.push('/roster')
+
+        // TO DO: put following 2 lines inside conditional for if (res.success)
+        if (res.success){
+          this.props.setUser(res.user)
+
+          this.props.history.push('/roster')
+        }
     }.bind(this))
   }
 

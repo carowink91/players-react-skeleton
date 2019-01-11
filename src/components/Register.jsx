@@ -82,12 +82,12 @@ class Register extends Component {
 
             if (token){
               localStorage.setItem('token', token)
+              let user = JSON.parse(respBody).user
+              console.log(user)
+
+              this.props.setUser({user: user})
             }
 
-            let user = JSON.parse(respBody).user
-            console.log(user)
-
-            this.props.setUser({user: user})
           }
       }.bind(this))
     }
