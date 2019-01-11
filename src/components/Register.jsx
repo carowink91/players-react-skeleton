@@ -35,6 +35,10 @@ class Register extends Component {
       this.setState({
         emptyFields: {...this.state.emptyFields, [event.target.name]: false}
       })
+    } else {
+      this.setState({
+        emptyFields: {...this.state.emptyFields, [event.target.name]: false}
+      })
     }
   }
 
@@ -67,8 +71,6 @@ class Register extends Component {
           form: body
       }
       // Start the request
-      let currentUser = 'none';
-
       request(options, function (error, response, respBody) {
 
           if (!error) {
@@ -124,29 +126,30 @@ class Register extends Component {
     }
     else {
       return(
-        <div>Register!
-        {this.state.showErrors ? <RegistrationErrors errors={this.state.emptyFields}/> : null}
+        <div>
+          <h3>Register!</h3>
+          {this.state.showErrors ? <RegistrationErrors errors={this.state.emptyFields}/> : null}
 
-        <form id="register"
-        onSubmit={this.submitRegistration}>
+          <form id="register"
+          onSubmit={this.submitRegistration}>
 
-        <label>First Name: </label>
-        <input type="text" id="firstName" name="firstName" placeholder="First Name" onChange={this.handleChange}></input>
+          <label>First Name: </label>
+          <input type="text" id="firstName" name="firstName" placeholder="First Name" onChange={this.handleChange}/>
 
-        <label>Last Name: </label>
-        <input type="text" id="lastName" name="lastName" placeholder="Last Name" onChange={this.handleChange}></input>
+          <label>Last Name: </label>
+          <input type="text" id="lastName" name="lastName" placeholder="Last Name" onChange={this.handleChange}/>
 
-        <label>Email: </label>
-        <input type="text" id="email" name="email" placeholder="Email" onChange={this.handleChange}></input>
+          <label>Email: </label>
+          <input type="text" id="email" name="email" placeholder="Email" onChange={this.handleChange}/>
 
-        <label>Password: </label>
-        <input type="text" id="password" name="password" placeholder="Password" onChange={this.handleChange}></input>
+          <label>Password: </label>
+          <input type="text" id="password" name="password" placeholder="Password" onChange={this.handleChange}/>
 
-        <label>Confirm Password: </label>
-        <input type="text" id="confirmPassword" name="confirmPassword" placeholder="Confirm Password" onChange={this.handleChange}></input>
+          <label>Confirm Password: </label>
+          <input type="text" id="confirmPassword" name="confirmPassword" placeholder="Confirm Password" onChange={this.handleChange}/>
 
-        <input type="submit"/>
-        </form>
+          <input type="submit"/>
+          </form>
         </div>
       )
     }

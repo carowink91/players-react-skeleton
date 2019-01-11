@@ -4,6 +4,7 @@ import Home from './Home';
 import Login from './Login';
 import Register from './Register';
 import Roster from './Roster';
+import request from 'request';
 
 class App extends Component {
   constructor(){
@@ -20,16 +21,28 @@ class App extends Component {
     })
   }
 
+  
+
+
   render(){
     return(
       <Router>
         <Switch>
+
           <Route exact path='/' component={Home}/>
-          <Route exact path='/login' component={Login}/>
+
+          <Route exact path='/login' render={(props) =>
+                <Login {...props}
+                  setUser={this.setUser}/>}/>
+
           <Route exact path='/register' render={(props) =>
                 <Register {...props}
                   setUser={this.setUser}/>}/>
-          <Route exact path='/roster' component={Roster}/>
+
+          <Route exact path='/roster' render={(props) =>
+                <Roster {...props}
+                  user={this.state.user}/>}/>
+
         </Switch>
       </Router>
     )

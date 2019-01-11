@@ -1,4 +1,4 @@
-const URL = 'https://players-api.developer.alchemy.codes';
+// const URL = 'https://players-api.developer.alchemy.codes';
 // import axios from 'axios';
 
 
