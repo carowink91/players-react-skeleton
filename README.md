@@ -2,7 +2,7 @@
 
 ## Background
 The engineering team at Alchemy has built an (imaginary) game management platform.
-The platform has an API that allows you to create a manager(user) that allows them 
+The platform has an API that allows you to create a manager(user) that allows them
 to manage player rosters for their chosen sport.
 
 ## Your Mission
@@ -38,7 +38,7 @@ This test uses cypress to test user interactions, it requires that certain text,
 To see what tests are passing and why run: (Make sure your dev server is already running with npm start)
 - npm run e2e
 
-Part of working on a high performing team is making sure that everyone is using consistent style guidelines. This test 
+Part of working on a high performing team is making sure that everyone is using consistent style guidelines. This test
 uses ESLint and StyleLint to enforce rules outlined in .eslintrc and .stylelintrc. To check your styles against these guidelines run:
 - npm run lint:js
 - npm run lint:styles

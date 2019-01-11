@@ -1,161 +1,183 @@
 import React, { Component } from 'react';
-import RegistrationErrors from './RegistrationErrors';
-import { fetchPostNewUser } from '../Fetches';
-import axios from 'axios';
-import request from 'request';
 import { Redirect } from 'react-router-dom';
+import request from 'request';
+import RegistrationErrors from './RegistrationErrors';
 
 class Register extends Component {
-  constructor(props){
+  constructor(props) {
     super(props);
-    this.state={
-      firstName: "",
-      lastName: "",
-      email: "",
-      password: "",
-      confirmPassword: "",
+    this.state = {
+      firstName: '',
+      lastName: '',
+      email: '',
+      password: '',
+      confirmPassword: '',
       emptyFields: {
         firstName: true,
         lastName: true,
         email: true,
         password: true,
-        confirmPassword: true
+        confirmPassword: true,
       },
       showErrors: false,
-      user: null
-    }
+    };
   }
-
 
   handleChange = (event) => {
     this.setState({
-      [event.target.name]: event.target.value
-    })
-    if (event.target.value !== ""){
+      [event.target.name]: event.target.value,
+    });
+    if (event.target.value !== '') {
       this.setState({
-        emptyFields: {...this.state.emptyFields, [event.target.name]: false}
-      })
+        emptyFields: { ...this.state.emptyFields, [event.target.name]: false },
+      });
     } else {
       this.setState({
-        emptyFields: {...this.state.emptyFields, [event.target.name]: false}
-      })
+        emptyFields: { ...this.state.emptyFields, [event.target.name]: false },
+      });
     }
-  }
+  };
 
   submitRegistration = (event) => {
     event.preventDefault();
     this.setState({
-      showErrors: false
-    })
+      showErrors: false,
+    });
     // check all fields are filled and passwords match
-    if (this.checkFieldsAreFilled() && this.checkPasswordMatch()){
-      console.log("all good")
-      console.log(this.state.password + " " + this.state.confirmPassword)
-      let body = {
-        "first_name": this.state.firstName,
-        "last_name": this.state.lastName,
-        "email": this.state.email,
-        "password": this.state.password,
-        "confirm_password": this.state.confirmPassword
-      }
+    if (this.checkFieldsAreFilled() && this.checkPasswordMatch()) {
+      const body = {
+        first_name: this.state.firstName,
+        last_name: this.state.lastName,
+        email: this.state.email,
+        password: this.state.password,
+        confirm_password: this.state.confirmPassword,
+      };
 
-      let headers = {
-        'Content-Type':'application/json'
-      }
+      const headers = {
+        'Content-Type': 'application/json',
+      };
 
       // Configure the request
-      let options = {
-          url: `https://players-api.developer.alchemy.codes/api/user`,
-          method: 'POST',
-          headers: headers,
-          form: body
-      }
+      const options = {
+        url: 'https://players-api.developer.alchemy.codes/api/user',
+        method: 'POST',
+        headers,
+        form: body,
+      };
       // Start the request
-      request(options, function (error, response, respBody) {
+      request(options, (error, response, respBody) => {
+        if (!error) {
+          // Print out the response body
 
-          if (!error) {
-            // Print out the response body
-            console.log(JSON.parse(respBody))
+          const token = JSON.parse(respBody).token;
 
-            let token = JSON.parse(respBody).token
-            console.log(token)
+          if (token) {
+            localStorage.setItem('token', token);
+            const user = JSON.parse(respBody).user;
 
-            if (token){
-              localStorage.setItem('token', token)
-              let user = JSON.parse(respBody).user
-              console.log(user)
-
-              this.props.setUser({user: user})
-              this.props.history.push('/roster')
-              
-            }
-
+            this.props.setUser({ user });
+            this.props.history.push('/roster');
           }
-      }.bind(this))
+        }
+      });
     }
-  }
+  };
 
   passUser = (user) => {
-    debugger
-    this.props.setUser(user)
-  }
+    this.props.setUser(user);
+  };
 
   checkFieldsAreFilled = () => {
-    for (const key in this.state.emptyFields){
-      if (this.state.emptyFields[key] === true){
+    for (const key in this.state.emptyFields) {
+      if (this.state.emptyFields[key] === true) {
         this.setState({
-          showErrors: true
-        })
-        return false
+          showErrors: true,
+        });
+        return false;
       }
     }
-    return true
-  }
+    return true;
+  };
 
   checkPasswordMatch = () => {
-    if (this.state.password !== this.state.confirmPassword){
-      return alert("Passwords must match.");
-    } else {
-      return true
+    if (this.state.password !== this.state.confirmPassword) {
+      return alert('Passwords must match.');
     }
-  }
+    return true;
+  };
 
-
-  render(){
-    console.log(this.props)
-    if (localStorage.getItem('token')){
-      return <Redirect to='/roster'/>
+  render() {
+    if (localStorage.getItem('token')) {
+      return <Redirect to="/roster" />;
     }
-    else {
-      return(
-        <div>
-          <h3>Register!</h3>
-          {this.state.showErrors ? <RegistrationErrors errors={this.state.emptyFields}/> : null}
+    return (
+      <div>
+        <h3>Register!</h3>
+        {this.state.showErrors ? (
+          <RegistrationErrors errors={this.state.emptyFields} />
+        ) : null}
 
-          <form id="register"
-          onSubmit={this.submitRegistration}>
+        <form id="register" onSubmit={this.submitRegistration}>
+          <label htmlFor="firstName">
+            First Name:
+            <input
+              type="text"
+              id="firstName"
+              name="firstName"
+              placeholder="First Name"
+              onChange={this.handleChange}
+            />
+          </label>
 
-          <label>First Name: </label>
-          <input type="text" id="firstName" name="firstName" placeholder="First Name" onChange={this.handleChange}/>
+          <label htmlFor="lastName">
+            Last Name:
+            <input
+              type="text"
+              id="lastName"
+              name="lastName"
+              placeholder="Last Name"
+              onChange={this.handleChange}
+            />
+          </label>
 
-          <label>Last Name: </label>
-          <input type="text" id="lastName" name="lastName" placeholder="Last Name" onChange={this.handleChange}/>
+          <label htmlFor="email">
+            Email:
+            <input
+              type="text"
+              id="email"
+              name="email"
+              placeholder="Email"
+              onChange={this.handleChange}
+            />
+          </label>
 
-          <label>Email: </label>
-          <input type="text" id="email" name="email" placeholder="Email" onChange={this.handleChange}/>
+          <label htmlFor="password">
+            Password:
+            <input
+              type="text"
+              id="password"
+              name="password"
+              placeholder="Password"
+              onChange={this.handleChange}
+            />
+          </label>
 
-          <label>Password: </label>
-          <input type="text" id="password" name="password" placeholder="Password" onChange={this.handleChange}/>
+          <label htmlFor="confirmPassword">
+            Confirm Password:
+            <input
+              type="text"
+              id="confirmPassword"
+              name="confirmPassword"
+              placeholder="Confirm Password"
+              onChange={this.handleChange}
+            />
+          </label>
 
-          <label>Confirm Password: </label>
-          <input type="text" id="confirmPassword" name="confirmPassword" placeholder="Confirm Password" onChange={this.handleChange}/>
-
-          <input type="submit" id="register"/>
-          </form>
-        </div>
-      )
-    }
+          <input type="submit" id="register" />
+        </form>
+      </div>
+    );
   }
 }
 
-export default Register
+export default Register;
