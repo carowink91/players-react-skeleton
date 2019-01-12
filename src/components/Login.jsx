@@ -108,16 +108,16 @@ class Login extends Component {
     }
     return (
       <div className="login-background">
-        <Grid textAlign="center" verticalAlign="middle" id="login">
+        <Grid textAlign="center" verticalAlign="middle" id="login-form">
           <Grid.Column style={{ maxWidth: 450 }}>
             {this.state.showErrors ? (
               <RegistrationErrors errors={this.state.emptyFields} />
             ) : null}
 
             <Form size="large">
-              <Segment raised>
+              <Segment raised id="form-body">
                 <Form.Field>
-                  <label htmlFor="email">
+                  <label htmlFor="email" id="email-label">
                     Email:
                     <Form.Input
                       fluid
@@ -131,7 +131,7 @@ class Login extends Component {
                 </Form.Field>
 
                 <Form.Field>
-                  <label htmlFor="password">
+                  <label htmlFor="password" id="password-label">
                     Password:
                     <Form.Input
                       fluid
@@ -144,9 +144,9 @@ class Login extends Component {
                   </label>
                 </Form.Field>
 
-                <Button id="login" color="teal" onClick={this.handleSubmit}>
+                <button id="login-button" onClick={this.handleSubmit}>
                   Login
-                </Button>
+                </button>
               </Segment>
             </Form>
           </Grid.Column>
