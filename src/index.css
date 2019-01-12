@@ -86,7 +86,8 @@ a.text {
   padding-top: 34vh;
 }
 
-#form-body {
+#login-form-body,
+#register-form-body {
   background-color: rgb(92, 49, 63);
   opacity: 0.95;
 }
@@ -107,6 +108,49 @@ a.text {
 
 #password,
 #email,
-#password:active {
+#firstName,
+#lastName,
+#confirmPassword {
   background-color: rgb(203, 100, 96);
+}
+
+/*  Registration Page */
+
+.register-background {
+  background-image: url('../Images/OldWallpaper.jpg');
+  background-size: cover;
+  height: 100vh;
+  width: 100vw;
+}
+
+#register-form {
+  padding-top: 20vh;
+}
+
+#register-button {
+  background-color: rgb(200, 169, 146);
+  border-style: none;
+  border-radius: 5px;
+  font-size: 0.9em;
+  font-weight: bold;
+  padding: 10px 20px 10px 20px;
+}
+
+#lastName-label,
+#firstName-label,
+#password-label,
+#confirmPassword-label,
+#email-label {
+  color: rgb(174, 192, 193);
+}
+
+#register-header {
+  color: rgb(243, 223, 185);
+  font-size: 3em;
+  font-weight: bold;
+  background-color: tan;
+  opacity: 0.95;
+  border-style: solid;
+  border-color: rgb(92, 49, 63);
+  border-radius: 3px;
 }

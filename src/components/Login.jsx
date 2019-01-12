@@ -115,7 +115,7 @@ class Login extends Component {
             ) : null}
 
             <Form size="large">
-              <Segment raised id="form-body">
+              <Segment raised id="login-form-body">
                 <Form.Field>
                   <label htmlFor="email" id="email-label">
                     Email:

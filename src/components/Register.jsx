@@ -2,6 +2,15 @@ import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
 import request from 'request';
 import RegistrationErrors from './RegistrationErrors';
+import {
+  Form,
+  Button,
+  Segment,
+  Header,
+  Grid,
+  Image,
+  Message,
+} from 'semantic-ui-react';
 
 class Register extends Component {
   constructor(props) {
@@ -75,7 +84,7 @@ class Register extends Component {
         if (!error) {
           // Print out the response body
           const { token } = JSON.parse(respBody);
-          console.log(respBody)
+          console.log(respBody);
           if (token) {
             localStorage.setItem('token', token);
             const { user } = JSON.parse(respBody);
@@ -115,72 +124,92 @@ class Register extends Component {
       return <Redirect to="/roster" />;
     }
     return (
-      <div>
-        <h3>Register!</h3>
-        {this.state.showErrors ? (
-          <RegistrationErrors errors={this.state.emptyFields} />
-        ) : null}
+      <div className="register-background">
+        <Grid textAlign="center" verticalAlign="middle" id="register-form">
+          <Grid.Column style={{ maxWidth: 450 }}>
+            <header id="register-header">Make an Account</header>
+            {this.state.showErrors ? (
+              <RegistrationErrors errors={this.state.emptyFields} />
+            ) : null}
 
-        {this.state.showPasswordAlert ? <div>Passwords must match.</div> : null}
+            {this.state.showPasswordAlert ? (
+              <div>Passwords must match.</div>
+            ) : null}
 
-        <form onSubmit={this.submitRegistration}>
-          <label htmlFor="firstName">
-            First Name:
-            <input
-              type="text"
-              id="firstName"
-              name="firstName"
-              placeholder="First Name"
-              onChange={this.handleChange}
-            />
-          </label>
+            <Form size="large">
+              <Segment raised id="register-form-body">
+                <Form.Field>
+                  <label htmlFor="firstName" id="firstName-label">
+                    First Name:
+                    <Form.Input
+                      type="text"
+                      id="firstName"
+                      name="firstName"
+                      placeholder="First Name"
+                      onChange={this.handleChange}
+                    />
+                  </label>
+                </Form.Field>
 
-          <label htmlFor="lastName">
-            Last Name:
-            <input
-              type="text"
-              id="lastName"
-              name="lastName"
-              placeholder="Last Name"
-              onChange={this.handleChange}
-            />
-          </label>
+                <Form.Field>
+                  <label htmlFor="lastName" id="lastName-label">
+                    Last Name:
+                    <Form.Input
+                      type="text"
+                      id="lastName"
+                      name="lastName"
+                      placeholder="Last Name"
+                      onChange={this.handleChange}
+                    />
+                  </label>
+                </Form.Field>
 
-          <label htmlFor="email">
-            Email:
-            <input
-              type="text"
-              id="email"
-              name="email"
-              placeholder="Email"
-              onChange={this.handleChange}
-            />
-          </label>
+                <Form.Field>
+                  <label htmlFor="email" id="email-label">
+                    Email:
+                    <Form.Input
+                      type="text"
+                      id="email"
+                      name="email"
+                      placeholder="Email"
+                      onChange={this.handleChange}
+                    />
+                  </label>
+                </Form.Field>
 
-          <label htmlFor="password">
-            Password:
-            <input
-              type="password"
-              id="password"
-              name="password"
-              placeholder="Password"
-              onChange={this.handleChange}
-            />
-          </label>
+                <Form.Field>
+                  <label htmlFor="password" id="password-label">
+                    Password:
+                    <Form.Input
+                      type="password"
+                      id="password"
+                      name="password"
+                      placeholder="Password"
+                      onChange={this.handleChange}
+                    />
+                  </label>
+                </Form.Field>
 
-          <label htmlFor="confirmPassword">
-            Confirm Password:
-            <input
-              type="password"
-              id="confirmPassword"
-              name="confirmPassword"
-              placeholder="Confirm Password"
-              onChange={this.handleChange}
-            />
-          </label>
+                <Form.Field>
+                  <label htmlFor="confirmPassword" id="confirmPassword-label">
+                    Confirm Password:
+                    <Form.Input
+                      type="password"
+                      id="confirmPassword"
+                      name="confirmPassword"
+                      placeholder="Confirm Password"
+                      onChange={this.handleChange}
+                    />
+                  </label>
+                </Form.Field>
 
-          <input type="submit" id="register" />
-        </form>
+                <button id="register-button" onClick={this.submitRegistration}>
+                  Register
+                </button>
+              </Segment>
+            </Form>
+          </Grid.Column>
+        </Grid>
       </div>
     );
   }
