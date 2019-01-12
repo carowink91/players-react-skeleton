@@ -20,6 +20,7 @@ class Register extends Component {
         confirmPassword: true,
       },
       showErrors: false,
+      showPasswordAlert: false,
     };
   }
 
@@ -33,7 +34,7 @@ class Register extends Component {
       });
     } else {
       this.setState({
-        emptyFields: { ...this.state.emptyFields, [event.target.name]: false },
+        emptyFields: { ...this.state.emptyFields, [event.target.name]: true },
       });
     }
   };
@@ -42,6 +43,7 @@ class Register extends Component {
     event.preventDefault();
     this.setState({
       showErrors: false,
+      showPasswordAlert: false,
     });
     // check all fields are filled and passwords match
     if (this.checkFieldsAreFilled() && this.checkPasswordMatch()) {
@@ -68,12 +70,11 @@ class Register extends Component {
       request(options, (error, response, respBody) => {
         if (!error) {
           // Print out the response body
-
-          const token = JSON.parse(respBody).token;
+          const { token } = JSON.parse(respBody);
 
           if (token) {
             localStorage.setItem('token', token);
-            const user = JSON.parse(respBody).user;
+            const { user } = JSON.parse(respBody);
 
             this.props.setUser({ user });
             this.props.history.push('/roster');
@@ -88,20 +89,19 @@ class Register extends Component {
   };
 
   checkFieldsAreFilled = () => {
-    for (const key in this.state.emptyFields) {
-      if (this.state.emptyFields[key] === true) {
-        this.setState({
-          showErrors: true,
-        });
-        return false;
-      }
+    const values = Object.values(this.state.emptyFields);
+    if (values.includes(true)) {
+      this.setState({
+        showErrors: true,
+      });
+      return false;
     }
     return true;
   };
 
   checkPasswordMatch = () => {
     if (this.state.password !== this.state.confirmPassword) {
-      return alert('Passwords must match.');
+      this.setState({ showPasswordAlert: true });
     }
     return true;
   };
@@ -117,7 +117,9 @@ class Register extends Component {
           <RegistrationErrors errors={this.state.emptyFields} />
         ) : null}
 
-        <form id="register" onSubmit={this.submitRegistration}>
+        {this.state.showPasswordAlert ? <div>Passwords must match.</div> : null}
+
+        <form onSubmit={this.submitRegistration}>
           <label htmlFor="firstName">
             First Name:
             <input
@@ -154,7 +156,7 @@ class Register extends Component {
           <label htmlFor="password">
             Password:
             <input
-              type="text"
+              type="password"
               id="password"
               name="password"
               placeholder="Password"
@@ -165,7 +167,7 @@ class Register extends Component {
           <label htmlFor="confirmPassword">
             Confirm Password:
             <input
-              type="text"
+              type="password"
               id="confirmPassword"
               name="confirmPassword"
               placeholder="Confirm Password"

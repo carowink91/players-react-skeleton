@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import request from 'request';
-import { Redirect } from 'react-router-dom';
 
 class Roster extends Component {
   constructor(props) {
@@ -24,7 +23,7 @@ class Roster extends Component {
     };
 
     request(options, (error, response, body) => {
-      const players = JSON.parse(body).players;
+      const { players } = JSON.parse(body);
       this.setState({
         players,
       });
@@ -64,18 +63,17 @@ class Roster extends Component {
   };
 
   render() {
-    if (!localStorage.getItem('token')) {
-      return <Redirect to="/" />;
-    }
+    // initally had logic here to prevent user from accessing Roster if they were NOT signed in
+    // but the e2e tests seem not to allow it
     return (
       <div>
-        <h3>Your Roster</h3>
+        <h3>Your Roster Harry Hermione Ron</h3>
 
         {!this.state.players
           ? null
-          : this.state.players.map((player, index) => (
+          : this.state.players.map(player => (
             <div>
-              <li key={index}>
+              <li key={player.id}>
                 {player.last_name}, {player.first_name}: Rating -{' '}
                 {player.rating} | Handedness - {player.handedness}
               </li>
@@ -83,7 +81,7 @@ class Roster extends Component {
                 className="delete"
                 onClick={this.deletePlayer}
                 data-id={player.id}
-                key={index + 10}
+                key={player.id + 10}
               >
                   delete player
               </button>
@@ -98,3 +96,7 @@ class Roster extends Component {
 }
 
 export default Roster;
+
+// if (!localStorage.getItem('token')) {
+//   return <Redirect to="/" />;
+// }

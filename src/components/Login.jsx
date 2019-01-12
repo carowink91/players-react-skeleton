@@ -67,8 +67,7 @@ class Login extends Component {
 
     request(options, (errors, response, respBody) => {
       const res = JSON.parse(respBody);
-      const token = res.token;
-
+      const { token } = res;
       // store jwt in localStorage
       localStorage.setItem('token', token);
 
@@ -82,13 +81,13 @@ class Login extends Component {
   };
 
   checkFieldsAreFilled = () => {
-    for (const key in this.state.emptyFields) {
-      if (this.state.emptyFields[key] === true) {
-        this.setState({
-          showErrors: true,
-        });
-        return false;
-      }
+    const values = Object.values(this.state.emptyFields);
+
+    if (values.includes(true)) {
+      this.setState({
+        showErrors: true,
+      });
+      return false;
     }
     return true;
   };
