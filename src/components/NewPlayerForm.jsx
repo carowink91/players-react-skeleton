@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import request from 'request';
 import RegistrationErrors from './RegistrationErrors';
+import { Redirect } from 'react-router-dom';
+
 
 class NewPlayerForm extends Component {
   constructor(props) {
@@ -38,6 +40,10 @@ class NewPlayerForm extends Component {
   handleSubmit = (event) => {
     event.preventDefault();
     this.setState({ showErrors: false });
+
+    // this.props.history.push('/roster');
+
+
     // check that fields are filled
     if (this.checkFieldsAreFilled()) {
       // then submit form
@@ -75,7 +81,7 @@ class NewPlayerForm extends Component {
 
     request(options, (errors, response, respBody) => {
       const res = JSON.parse(respBody);
-
+      console.log(res)
       if (res.success) {
         this.props.history.push('/roster');
       }
@@ -89,6 +95,9 @@ class NewPlayerForm extends Component {
   render() {
     // initally had logic here to prevent user from accessing Roster if they were NOT signed in
     // but the e2e tests seem not to allow it
+    if (!localStorage.getItem('token')) {
+      return <Redirect to="/" />;
+    }
     return (
       <div>
         <h3>New Player Form</h3>

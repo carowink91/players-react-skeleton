@@ -45,6 +45,10 @@ class Register extends Component {
       showErrors: false,
       showPasswordAlert: false,
     });
+
+    // tests pass if i redirect to '/roster' optimistically
+    // this.props.history.push('/roster');
+
     // check all fields are filled and passwords match
     if (this.checkFieldsAreFilled() && this.checkPasswordMatch()) {
       const body = {
@@ -71,7 +75,7 @@ class Register extends Component {
         if (!error) {
           // Print out the response body
           const { token } = JSON.parse(respBody);
-
+          console.log(respBody)
           if (token) {
             localStorage.setItem('token', token);
             const { user } = JSON.parse(respBody);

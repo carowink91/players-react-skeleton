@@ -2,6 +2,15 @@ import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
 import request from 'request';
 import RegistrationErrors from './RegistrationErrors';
+import {
+  Form,
+  Button,
+  Segment,
+  Header,
+  Grid,
+  Image,
+  Message,
+} from 'semantic-ui-react';
 
 class Login extends Component {
   constructor(props) {
@@ -62,12 +71,13 @@ class Login extends Component {
     // redirecting AFTER http request resolves, leaves cypress saying it's taken too long
     // curious as to better practice here!
     // setTimeout(() => {
-    //   this.props.history.push('/roster');
+    // this.props.history.push('/roster');
     // }, 300);
 
     request(options, (errors, response, respBody) => {
       const res = JSON.parse(respBody);
       const { token } = res;
+      console.log(res);
       // store jwt in localStorage
       localStorage.setItem('token', token);
 
@@ -97,38 +107,50 @@ class Login extends Component {
       return <Redirect to="/roster" />;
     }
     return (
-      <div>
-        <h3>Login!</h3>
+      <div className="login-background">
+        <Grid textAlign="center" verticalAlign="middle" id="login">
+          <Grid.Column style={{ maxWidth: 450 }}>
+            {this.state.showErrors ? (
+              <RegistrationErrors errors={this.state.emptyFields} />
+            ) : null}
 
-        {this.state.showErrors ? (
-          <RegistrationErrors errors={this.state.emptyFields} />
-        ) : null}
+            <Form size="large">
+              <Segment raised>
+                <Form.Field>
+                  <label htmlFor="email">
+                    Email:
+                    <Form.Input
+                      fluid
+                      type="text"
+                      name="email"
+                      placeholder="Email"
+                      id="email"
+                      onChange={this.handleChange}
+                    />
+                  </label>
+                </Form.Field>
 
-        <form onSubmit={this.handleSubmit}>
-          <label htmlFor="email">
-            Email:
-            <input
-              type="text"
-              name="email"
-              placeholder="Email"
-              id="email"
-              onChange={this.handleChange}
-            />
-          </label>
+                <Form.Field>
+                  <label htmlFor="password">
+                    Password:
+                    <Form.Input
+                      fluid
+                      type="password"
+                      name="password"
+                      placeholder="Password"
+                      id="password"
+                      onChange={this.handleChange}
+                    />
+                  </label>
+                </Form.Field>
 
-          <label htmlFor="password">
-            Password:
-            <input
-              type="password"
-              name="password"
-              placeholder="Password"
-              id="password"
-              onChange={this.handleChange}
-            />
-          </label>
-
-          <input type="submit" id="login" />
-        </form>
+                <Button id="login" color="teal" onClick={this.handleSubmit}>
+                  Login
+                </Button>
+              </Segment>
+            </Form>
+          </Grid.Column>
+        </Grid>
       </div>
     );
   }

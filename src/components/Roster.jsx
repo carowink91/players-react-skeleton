@@ -1,5 +1,6 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import request from 'request';
+import { Redirect } from 'react-router-dom';
 
 class Roster extends Component {
   constructor(props) {
@@ -65,14 +66,18 @@ class Roster extends Component {
   render() {
     // initally had logic here to prevent user from accessing Roster if they were NOT signed in
     // but the e2e tests seem not to allow it
+
+    if (!localStorage.getItem('token')) {
+      return <Redirect to="/" />;
+    }
     return (
       <div>
-        <h3>Your Roster Harry Hermione Ron</h3>
+        <h3>Your Roster</h3>
 
         {!this.state.players
           ? null
           : this.state.players.map(player => (
-            <div>
+            <Fragment>
               <li key={player.id}>
                 {player.last_name}, {player.first_name}: Rating -{' '}
                 {player.rating} | Handedness - {player.handedness}
@@ -85,7 +90,7 @@ class Roster extends Component {
               >
                   delete player
               </button>
-            </div>
+            </Fragment>
             ))}
 
         <button onClick={this.handleClick}>add new player</button>

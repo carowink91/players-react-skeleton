@@ -6,3 +6,82 @@
 body {
   margin: 1em;
 }
+
+/*  Background Wallpapers */
+
+#home {
+  background-image: url('../Images/YarnWallpaper.jpg');
+  background-size: cover;
+}
+
+#login {
+}
+
+.outer-container {
+  background-color: red;
+}
+
+.ui.grid > .row {
+  height: 50vh;
+  line-height: 30vh;
+  padding: 0 !important;
+  color: black;
+}
+
+.text {
+  color: white;
+  opacity: 1 !important;
+  z-index: -1;
+}
+
+a.text {
+  color: aqua;
+}
+
+.top-left {
+  font-size: 3rem;
+  overflow: auto;
+  background-color: grey;
+  border-radius: 5px;
+  opacity: 0.5;
+  margin-top: 10vh;
+  max-height: 30vh;
+  z-index: -1;
+}
+
+.bottom-left {
+  font-size: 1.7rem;
+  background-color: grey;
+  border-radius: 5px;
+  opacity: 0.5;
+  margin-top: 5vh;
+  max-height: 30vh;
+}
+
+.top-right {
+  font-size: 1.7rem;
+  background-color: grey;
+  border-radius: 5px;
+  opacity: 0.5;
+  margin-top: 10vh;
+  max-height: 30vh;
+}
+
+.bottom-right {
+  font-size: 1.3rem;
+  background-color: grey;
+  border-radius: 5px;
+  opacity: 0.5;
+  margin-top: 5vh;
+  max-height: 30vh;
+  overflow: auto;
+}
+
+/*   LOGIN PAGE */
+
+.login-background {
+  background-image: url('https://www.insidefabric.com/images/product/large/bf10418-2-oriental-bird-embroidery-silk-aqua-multi-by-g-p-and-j-baker.jpg');
+  background-size: cover;
+  height: 100vh;
+  width: 100vw;
+}
