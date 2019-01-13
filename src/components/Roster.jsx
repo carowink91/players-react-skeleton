@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from 'react';
 import request from 'request';
 import { Redirect } from 'react-router-dom';
-import { Grid, Header, Segment } from 'semantic-ui-react';
+import { Grid, Header, Segment, Card, Button } from 'semantic-ui-react';
 
 class Roster extends Component {
   constructor(props) {
@@ -75,42 +75,88 @@ class Roster extends Component {
       <div>
         <Grid>
           <Grid.Column
-            width={3}
+            width={2}
             id="nav-column"
             textAlign="center"
             style={{ background: 'rgb(56, 65, 93)', height: '110vh' }}
           >
             <div id="navbar">
-              <div className="navlink top">add new Pop</div>
-              <div className="navlink middle">wager Pop</div>
-              <div className="navlink bottom">logout</div>
+              <div className="navlink top">stats</div>
+              <div className="navlink top">Pop roster</div>
+              <div className="navlink middle" onClick={this.handleClick}>
+                add a new Pop
+              </div>
+              <div className="navlink middle">wager a Pop</div>
+              <div className="navlink bottom" onClick={this.props.logout}>
+                logout
+              </div>
             </div>
           </Grid.Column>
 
-          <Grid.Column width={13} textAlign="center" id="roster-background">
-            <Header size="huge">My Roster</Header>
-
-            {!this.state.players
-              ? null
-              : this.state.players.map(player => (
-                <Fragment>
-                  <li key={player.id}>
-                    {player.last_name}, {player.first_name}: Rating -{' '}
-                    {player.rating} | Handedness - {player.handedness}
-                  </li>
-                  <button
-                    className="delete"
-                    onClick={this.deletePlayer}
-                    data-id={player.id}
-                    key={player.id + 10}
-                  >
-                      delete player
-                  </button>
-                </Fragment>
-                ))}
-
-            <button onClick={this.handleClick}>add new player</button>
-            <button onClick={this.props.logout}>Logout</button>
+          <Grid.Column
+            width={14}
+            textAlign="center"
+            id="roster-background"
+            style={{ paddingTop: '15vh' }}
+          >
+            <div id="roster">
+              <h1 style={{ fontSize: '35px' }}>Pop Roster</h1>
+              <Card.Group
+                itemsPerRow={3}
+                style={{ marginLeft: '5vw', marginRight: '5vw' }}
+              >
+                {!this.state.players
+                  ? null
+                  : this.state.players.map(player => (
+                    <Fragment>
+                      <Card key={player.id} style={{ opacity: 0.9 }}>
+                        <Card.Content style={{ background: 'grey' }}>
+                          <Card.Header
+                            style={{
+                                color: 'lightblue',
+                                fontSize: '1.7em',
+                                fontFamily: 'Satisfy',
+                              }}
+                          >
+                            {player.last_name}, {player.first_name}
+                          </Card.Header>
+                          <Card.Meta
+                            extra
+                            style={{
+                                color: 'white',
+                                fontSize: '.9em',
+                                fontFamily: 'Merienda',
+                              }}
+                          >
+                              rating: {player.rating}
+                          </Card.Meta>
+                          <Card.Header
+                            style={{
+                                color: 'black',
+                                fontSize: '1.1em',
+                                fontFamily: 'Merienda',
+                                padding: '.5em',
+                              }}
+                          >
+                              handedness: {player.handedness}
+                          </Card.Header>
+                        </Card.Content>
+                        <Button
+                          basic
+                          color="red"
+                          style={{ fontFamily: 'Merienda' }}
+                          className="delete"
+                          onClick={this.deletePlayer}
+                          data-id={player.id}
+                          key={player.id + 10}
+                        >
+                            delete player
+                        </Button>
+                      </Card>
+                    </Fragment>
+                    ))}
+              </Card.Group>
+            </div>
           </Grid.Column>
         </Grid>
       </div>
