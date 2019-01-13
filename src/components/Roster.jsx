@@ -2,6 +2,7 @@ import React, { Component, Fragment } from 'react';
 import request from 'request';
 import { Redirect } from 'react-router-dom';
 import { Grid, Header, Segment, Card, Button } from 'semantic-ui-react';
+import Navbar from './Navbar';
 
 class Roster extends Component {
   constructor(props) {
@@ -30,10 +31,6 @@ class Roster extends Component {
         players,
       });
     });
-  };
-
-  handleClick = () => {
-    this.props.history.push('/player/new');
   };
 
   deletePlayer = (event) => {
@@ -80,17 +77,7 @@ class Roster extends Component {
             textAlign="center"
             style={{ background: 'rgb(56, 65, 93)', height: '110vh' }}
           >
-            <div id="navbar">
-              <div className="navlink top">stats</div>
-              <div className="navlink top">Pop roster</div>
-              <div className="navlink middle" onClick={this.handleClick}>
-                add a new Pop
-              </div>
-              <div className="navlink middle">wager a Pop</div>
-              <div className="navlink bottom" onClick={this.props.logout}>
-                logout
-              </div>
-            </div>
+            <Navbar logout={this.props.logout} />
           </Grid.Column>
 
           <Grid.Column
@@ -109,7 +96,15 @@ class Roster extends Component {
                   ? null
                   : this.state.players.map(player => (
                     <Fragment>
-                      <Card key={player.id} style={{ opacity: 0.9 }}>
+                      <Card
+                        key={player.id}
+                        style={{
+                            opacity: 0.9,
+                            width: '15.5vw',
+                            marginLeft: '5vw',
+                            marginRight: '5vw',
+                          }}
+                      >
                         <Card.Content style={{ background: 'grey' }}>
                           <Card.Header
                             style={{
@@ -121,7 +116,6 @@ class Roster extends Component {
                             {player.last_name}, {player.first_name}
                           </Card.Header>
                           <Card.Meta
-                            extra
                             style={{
                                 color: 'white',
                                 fontSize: '.9em',

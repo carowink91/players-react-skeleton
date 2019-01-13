@@ -2,7 +2,15 @@ import React, { Component } from 'react';
 import request from 'request';
 import RegistrationErrors from './RegistrationErrors';
 import { Redirect } from 'react-router-dom';
-
+import Navbar from './Navbar';
+import {
+  Grid,
+  Dropdown,
+  Form,
+  Button,
+  Segment,
+  Header,
+} from 'semantic-ui-react';
 
 class NewPlayerForm extends Component {
   constructor(props) {
@@ -43,7 +51,6 @@ class NewPlayerForm extends Component {
 
     // this.props.history.push('/roster');
 
-
     // check that fields are filled
     if (this.checkFieldsAreFilled()) {
       // then submit form
@@ -81,7 +88,7 @@ class NewPlayerForm extends Component {
 
     request(options, (errors, response, respBody) => {
       const res = JSON.parse(respBody);
-      console.log(res)
+      console.log(res);
       if (res.success) {
         this.props.history.push('/roster');
       }
@@ -93,67 +100,119 @@ class NewPlayerForm extends Component {
   };
 
   render() {
+    const handednessOptions = [
+      {
+        text: 'left',
+        value: 'left',
+        // image: { avatar: true, src: '/images/avatar/small/jenny.jpg' },
+      },
+      {
+        text: 'right',
+        value: 'right',
+        // image: { avatar: true, src: '/images/avatar/small/jenny.jpg' },
+      },
+    ];
+
     // initally had logic here to prevent user from accessing Roster if they were NOT signed in
     // but the e2e tests seem not to allow it
+
     if (!localStorage.getItem('token')) {
       return <Redirect to="/" />;
     }
     return (
       <div>
-        <h3>New Player Form</h3>
+        <Grid textAlign="center" verticalAlign="middle">
+          <Grid.Column
+            width={2}
+            id="nav-column"
+            textAlign="center"
+            style={{ background: 'rgb(56, 65, 93)', height: '110vh' }}
+          >
+            <Navbar logout={this.props.logout} />
+          </Grid.Column>
 
-        {this.state.showErrors ? (
-          <RegistrationErrors errors={this.state.emptyFields} />
-        ) : null}
-
-        <form onSubmit={this.handleSubmit}>
-          <label htmlFor="firstName">
-            First Name:
-            <input
-              type="text"
-              name="firstName"
-              id="firstName"
-              onChange={this.handleChange}
-            />
-          </label>
-          <label htmlFor="lastName">
-            Last Name:
-            <input
-              type="text"
-              name="lastName"
-              id="lastName"
-              onChange={this.handleChange}
-            />
-          </label>
-          <label htmlFor="rating">
-            Rating:
-            <input
-              type="text"
-              name="rating"
-              id="rating"
-              onChange={this.handleChange}
-            />
-          </label>
-          <label htmlFor="handedness">
-            Handedness:
-            <select
-              onChange={this.handleChange}
-              name="handedness"
-              id="handedness"
+          <Grid.Column width={14}>
+            <Grid
+              textAlign="center"
+              id="roster-background"
+              style={{ paddingTop: '15vh' }}
             >
-              <option name="left" value="left">
-                Left
-              </option>
-              <option name="right" value="right">
-                Right
-              </option>
-            </select>
-          </label>
-          <input type="submit" id="create" />
-        </form>
+              {this.state.showErrors ? (
+                <RegistrationErrors errors={this.state.emptyFields} />
+              ) : null}
+              <Grid.Column width={4}>
+                <Form style={{ maxWidth: 450 }}>
+                  <Segment
+                    raise
+                    id="new-player-form-body"
+                    style={{ backgroundColor: 'rgb(200, 169, 146)' }}
+                  >
+                    <h1 style={{ fontSize: '35px' }}>add a new pop</h1>
+                    <Form.Field>
+                      <label htmlFor="firstName">
+                        First Name:
+                        <Form.Input
+                          type="text"
+                          name="firstName"
+                          id="firstName"
+                          onChange={this.handleChange}
+                        />
+                      </label>
+                    </Form.Field>
 
-        <button onClick={this.cancel}>Cancel</button>
-        <button onClick={this.props.logout}>Logout</button>
+                    <Form.Field>
+                      <label htmlFor="lastName">
+                        Last Name:
+                        <Form.Input
+                          type="text"
+                          name="lastName"
+                          id="lastName"
+                          onChange={this.handleChange}
+                        />
+                      </label>
+                    </Form.Field>
+
+                    <Form.Field>
+                      <label htmlFor="rating">
+                        Rating:
+                        <Form.Input
+                          type="text"
+                          name="rating"
+                          id="rating"
+                          onChange={this.handleChange}
+                        />
+                      </label>
+                    </Form.Field>
+
+                    <Form.Field>
+                      <label htmlFor="handedness">
+                        Handedness:
+                        <Dropdown
+                          onChange={this.handleChange}
+                          name="handedness"
+                          id="handedness"
+                          placeholder="Select handedness"
+                          selection
+                          options={handednessOptions}
+                        />
+                      </label>
+                    </Form.Field>
+
+                    <button id="cancel-button" onClick={this.cancel}>
+                      Cancel
+                    </button>
+                    <button
+                      id="create-new-player-button"
+                      onClick={this.handleSubmit}
+                    >
+                      Submit
+                    </button>
+                  </Segment>
+                </Form>
+              </Grid.Column>
+            </Grid>
+          </Grid.Column>
+        </Grid>
       </div>
     );
   }
@@ -163,4 +222,98 @@ export default NewPlayerForm;
 
 // if (!localStorage.getItem('token')) {
 //   return <Redirect to="/" />;
+// }
+
+// <option name="left" value="left">
+//   Left
+// </option>
+// <option name="right" value="right">
+//   Right
+// </option>
+
+// ////////////
+
+// <div>
+//   <Grid textAlign="center" verticalAlign="middle">
+//     <Grid.Column
+//       width={2}
+//       id="nav-column"
+//       textAlign="center"
+//       style={{ background: 'rgb(56, 65, 93)', height: '110vh' }}
+//     >
+//       <Navbar logout={this.props.logout} />
+//     </Grid.Column>
+//
+//     <Grid.Column
+//       width={14}
+//       textAlign="center"
+//       id="roster-background"
+//       style={{ paddingTop: '15vh' }}
+//     >
+//       {this.state.showErrors ? (
+//         <RegistrationErrors errors={this.state.emptyFields} />
+//       ) : null}
+//
+//       <Form style={{ maxWidth: 450 }} onSubmit={this.handleSubmit}>
+//         <Segment raise id="new-player-form-body">
+//           <h1 style={{ fontSize: '35px' }}>add a new pop</h1>
+//           <Form.Field>
+//             <label htmlFor="firstName">
+//               First Name:
+//               <Form.Input
+//                 type="text"
+//                 name="firstName"
+//                 id="firstName"
+//                 onChange={this.handleChange}
+//               />
+//             </label>
+//           </Form.Field>
+//
+//           <Form.Field>
+//             <label htmlFor="lastName">
+//               Last Name:
+//               <Form.Input
+//                 type="text"
+//                 name="lastName"
+//                 id="lastName"
+//                 onChange={this.handleChange}
+//               />
+//             </label>
+//           </Form.Field>
+//
+//           <Form.Field>
+//             <label htmlFor="rating">
+//               Rating:
+//               <Form.Input
+//                 type="text"
+//                 name="rating"
+//                 id="rating"
+//                 onChange={this.handleChange}
+//               />
+//             </label>
+//           </Form.Field>
+//
+//           <Form.Field>
+//             <label htmlFor="handedness">
+//               Handedness:
+//               <Dropdown
+//                 onChange={this.handleChange}
+//                 name="handedness"
+//                 id="handedness"
+//                 placeholder="Select handedness"
+//                 selection
+//                 options={handednessOptions}
+//               />
+//             </label>
+//           </Form.Field>
+//
+//           <input type="submit" id="create" />
+//           <button onClick={this.cancel}>Cancel</button>
+//         </Segment>
+//       </Form>
+//     </Grid.Column>
+//   </Grid>
+// </div>
+// );
+// }
 // }

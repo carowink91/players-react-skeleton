@@ -25,6 +25,10 @@ class App extends Component {
     });
   };
 
+  redirectToNewPlayer = () => {
+    this.props.history.push('/player/new');
+  };
+
   logout = () => {
     localStorage.clear();
     this.props.history.push('/');

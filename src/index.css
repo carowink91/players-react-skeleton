@@ -118,7 +118,9 @@ a.text {
 #email,
 #firstName,
 #lastName,
-#confirmPassword {
+#confirmPassword,
+#rating,
+#handedness {
   background-color: rgb(203, 100, 96);
 }
 
@@ -205,4 +207,24 @@ a.text {
 
 * {
   font-family: 'Merienda', cursive;
+}
+
+/*   New Player Page */
+
+#cancel-button {
+  background-color: rgb(179, 201, 218);
+  border-style: none;
+  border-radius: 5px;
+  font-size: 0.9em;
+  font-weight: bold;
+  padding: 10px 20px 10px 20px;
+}
+
+#create-new-player-button {
+  background-color: rgb(69, 108, 170);
+  border-style: none;
+  border-radius: 5px;
+  font-size: 0.9em;
+  font-weight: bold;
+  padding: 10px 20px 10px 20px;
 }
