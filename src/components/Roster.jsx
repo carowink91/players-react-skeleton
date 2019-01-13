@@ -1,6 +1,7 @@
 import React, { Component, Fragment } from 'react';
 import request from 'request';
 import { Redirect } from 'react-router-dom';
+import { Grid, Header, Segment } from 'semantic-ui-react';
 
 class Roster extends Component {
   constructor(props) {
@@ -72,29 +73,46 @@ class Roster extends Component {
     }
     return (
       <div>
-        <h3>Your Roster</h3>
+        <Grid>
+          <Grid.Column
+            width={3}
+            id="nav-column"
+            textAlign="center"
+            style={{ background: 'rgb(56, 65, 93)', height: '110vh' }}
+          >
+            <div id="navbar">
+              <div className="navlink top">add new Pop</div>
+              <div className="navlink middle">wager Pop</div>
+              <div className="navlink bottom">logout</div>
+            </div>
+          </Grid.Column>
 
-        {!this.state.players
-          ? null
-          : this.state.players.map(player => (
-            <Fragment>
-              <li key={player.id}>
-                {player.last_name}, {player.first_name}: Rating -{' '}
-                {player.rating} | Handedness - {player.handedness}
-              </li>
-              <button
-                className="delete"
-                onClick={this.deletePlayer}
-                data-id={player.id}
-                key={player.id + 10}
-              >
-                  delete player
-              </button>
-            </Fragment>
-            ))}
+          <Grid.Column width={13} textAlign="center" id="roster-background">
+            <Header size="huge">My Roster</Header>
 
-        <button onClick={this.handleClick}>add new player</button>
-        <button onClick={this.props.logout}>Logout</button>
+            {!this.state.players
+              ? null
+              : this.state.players.map(player => (
+                <Fragment>
+                  <li key={player.id}>
+                    {player.last_name}, {player.first_name}: Rating -{' '}
+                    {player.rating} | Handedness - {player.handedness}
+                  </li>
+                  <button
+                    className="delete"
+                    onClick={this.deletePlayer}
+                    data-id={player.id}
+                    key={player.id + 10}
+                  >
+                      delete player
+                  </button>
+                </Fragment>
+                ))}
+
+            <button onClick={this.handleClick}>add new player</button>
+            <button onClick={this.props.logout}>Logout</button>
+          </Grid.Column>
+        </Grid>
       </div>
     );
   }

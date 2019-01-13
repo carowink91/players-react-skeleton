@@ -6,7 +6,7 @@ const Home = () => (
     <Grid.Row>
       <Grid.Column width={7} className="column">
         <div className="top-left">
-          <div className="text">Granny Swap</div>
+          <div className="text">PopPop</div>
         </div>
       </Grid.Column>
 
@@ -30,7 +30,7 @@ const Home = () => (
 
       <Grid.Column width={7} className="column">
         <div className="bottom-right">
-          <div className="text">The international grandmother marketplace.</div>
+          <div className="text">The international grandpa database.</div>
         </div>
       </Grid.Column>
     </Grid.Row>
