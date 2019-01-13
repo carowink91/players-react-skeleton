@@ -10,6 +10,7 @@ import Login from './Login';
 import Register from './Register';
 import Roster from './Roster';
 import NewPlayerForm from './NewPlayerForm';
+import Wager from './Wager';
 
 class App extends Component {
   constructor(props) {
@@ -57,6 +58,14 @@ class App extends Component {
             path="/roster"
             render={props => (
               <Roster {...props} user={this.state.user} logout={this.logout} />
+            )}
+          />
+
+          <Route
+            exact
+            path="/wager"
+            render={props => (
+              <Wager {...props} user={this.state.user} logout={this.logout} />
             )}
           />
 

@@ -16,7 +16,9 @@ class Navbar extends Component {
         <div>
           <a href="/player/new">add a new pop</a>
         </div>
-        <div className="navlink middle">wager a pop</div>
+        <div className="navlink top">
+          <a href="/wager">wager a pop</a>
+        </div>
         <div className="navlink bottom" onClick={this.props.logout}>
           logout
         </div>
