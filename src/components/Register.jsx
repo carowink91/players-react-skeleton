@@ -29,20 +29,20 @@ class Register extends Component {
         confirmPassword: true,
       },
       showErrors: false,
-      showPasswordAlert: false,
+      passwordError: '',
+      registrationError: ''
     };
   }
 
   handleChange = (event) => {
-    this.setState({
-      [event.target.name]: event.target.value,
-    });
     if (event.target.value !== '') {
       this.setState({
+        [event.target.name]: event.target.value,
         emptyFields: { ...this.state.emptyFields, [event.target.name]: false },
       });
     } else {
       this.setState({
+        [event.target.name]: event.target.value,
         emptyFields: { ...this.state.emptyFields, [event.target.name]: true },
       });
     }
@@ -52,14 +52,10 @@ class Register extends Component {
     event.preventDefault();
     this.setState({
       showErrors: false,
-      showPasswordAlert: false,
     });
 
-    // tests pass if i redirect to '/roster' optimistically
-    // this.props.history.push('/roster');
-
     // check all fields are filled and passwords match
-    if (this.checkFieldsAreFilled() && this.checkPasswordMatch()) {
+    if (this.checkPasswordMatch() && this.checkFieldsAreFilled()) {
       const body = {
         first_name: this.state.firstName,
         last_name: this.state.lastName,
@@ -81,18 +77,30 @@ class Register extends Component {
       };
       // Start the request
       request(options, (error, response, respBody) => {
-        if (!error) {
-          // Print out the response body
-          const { token } = JSON.parse(respBody);
-          console.log(respBody);
-          if (token) {
-            localStorage.setItem('token', token);
-            const { user } = JSON.parse(respBody);
 
-            this.props.setUser({ user });
-            this.props.history.push('/roster');
-          }
+        const res = JSON.parse(respBody);
+        console.log(res);
+        // if successful, store jwt in localStorage
+        if (res.success) {
+          localStorage.setItem('token', res.token);
+          this.props.setUser(res.user);
+        } else {
+          console.log(res.error.message)
+          this.setState({showErrors: true, loginError: res.error.message})
         }
+
+        // if (!error) {
+        //   // Print out the response body
+        //   const { token } = JSON.parse(respBody);
+        //   console.log(respBody);
+        //   if (token) {
+        //     localStorage.setItem('token', token);
+        //     const { user } = JSON.parse(respBody);
+        //
+        //     this.props.setUser({ user });
+        //     this.props.history.push('/roster');
+        //   }
+        // }
       });
     }
   };
@@ -103,7 +111,7 @@ class Register extends Component {
 
   checkFieldsAreFilled = () => {
     const values = Object.values(this.state.emptyFields);
-    if (values.includes(true)) {
+    if (values.includes(true) || this.state.passwordError !== '') {
       this.setState({
         showErrors: true,
       });
@@ -114,9 +122,14 @@ class Register extends Component {
 
   checkPasswordMatch = () => {
     if (this.state.password !== this.state.confirmPassword) {
-      this.setState({ showPasswordAlert: true });
+      this.setState({ passwordError: 'Passwords must match.' });
+      debugger
+      return false
+    } else {
+      this.setState({ passwordError: '' });
+      debugger
+      return true;
     }
-    return true;
   };
 
   render() {
@@ -129,7 +142,7 @@ class Register extends Component {
           <Grid.Column style={{ maxWidth: 450 }}>
             <header id="register-header">Make an Account</header>
             {this.state.showErrors ? (
-              <RegistrationErrors errors={this.state.emptyFields} />
+              <RegistrationErrors emptyFields={this.state.emptyFields} passwordError={this.state.passwordError} />
             ) : null}
 
             {this.state.showPasswordAlert ? (

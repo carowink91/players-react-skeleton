@@ -23,6 +23,7 @@ getEmptyFields = () => {
         <div>
         {this.getEmptyFields().map((field) => <div key={field.length}>{field} cannot be empty.</div>)}
         {this.props.loginError}
+        {this.props.passwordError}
         </div>
       </div>
     );
