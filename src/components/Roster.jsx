@@ -77,7 +77,8 @@ class Roster extends Component {
             textAlign="center"
             style={{ background: 'rgb(56, 65, 93)', height: '110vh' }}
           >
-            <Navbar logout={this.props.logout} />
+
+            <Navbar logout={this.props.logout}/>
           </Grid.Column>
 
           <Grid.Column

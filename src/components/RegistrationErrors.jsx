@@ -10,8 +10,8 @@ class RegistrationErrors extends Component {
 
   renderErrors = () => {
     const emptyFields = [];
-    const values = Object.values(this.props.errors);
-    const keys = Object.keys(this.props.errors);
+    const values = Object.values(this.props.emptyFields);
+    const keys = Object.keys(this.props.emptyFields);
 
     // note to self: below, tests prohibit "i++" unary operator
     for (let i = 0; i < values.length; i + 1) {
@@ -26,11 +26,7 @@ class RegistrationErrors extends Component {
     return (
       <div>
         <h3>Errors:</h3>
-        <ul>
-          {this.state.emptyFields.map(field => (
-            <li key={field.length}>{field} cannot be empty.</li>
-          ))}
-        </ul>
+        
       </div>
     );
   }

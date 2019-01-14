@@ -18,7 +18,7 @@ const Home = () => (
         </div>
       </Grid.Column>
     </Grid.Row>
-    <br />
+
     <Grid.Row>
       <Grid.Column width={7} className="column">
         <div className="bottom-left">
@@ -38,31 +38,3 @@ const Home = () => (
 );
 
 export default Home;
-
-// <div className="home-container">
-//   <Grid
-//     verticalAlign="middle"
-//     columns={4}
-//     centered
-//     divided
-//     padded
-//     relaxed="very"
-//     className="centered"
-//   >
-//     <Grid.Row>
-//       <Grid.Column>
-//         <div className="outer-container">Granny Swap</div>
-//       </Grid.Column>
-//       <Grid.Column>
-//         <a href="/login">Login</a>
-//         <br />
-//         <a href="/register">Register</a>
-//       </Grid.Column>
-//       <Grid.Column>
-//         <div className="outer-container">
-//           The International Grandmother Market.
-//         </div>
-//       </Grid.Column>
-//     </Grid.Row>
-//   </Grid>
-// </div>

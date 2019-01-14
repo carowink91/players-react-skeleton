@@ -69,12 +69,16 @@ class WagerInstructions extends Component {
   getInstructions = () => {
     const pieces = this.state.bingoPieces;
 
-    if (pieces === '') {
-      return "Click 'Draw' to draw 2 bingo pieces!";
-    } else if (pieces === ' I-27 and O-74' || pieces == ' I-30 and O-64') {
-      return 'BINGO! Find your winnings in your roster';
+    switch (pieces) {
+      case '':
+        return "Click 'Draw' to draw 2 bingo pieces!";
+      case ' I-27 and O-74':
+        return 'BINGO! Check the roster to see your winnings!';
+      case ' I-30 and O-64':
+        return 'BINGO! Check the roster to see your winnings!';
+      default:
+        return 'Sorry, no Bingo!';
     }
-    return 'Sorry, no Bingo!';
   };
 
   render() {

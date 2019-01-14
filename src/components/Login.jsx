@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
-import request from 'request';
+import fetchLogin from '../Fetches';
+import LoginForm from './LoginForm';
 import RegistrationErrors from './RegistrationErrors';
 import {
   Form,
@@ -18,24 +19,24 @@ class Login extends Component {
     this.state = {
       email: '',
       password: '',
-      showErrors: false,
+      showErrors: true,
       emptyFields: {
         email: true,
         password: true,
       },
+      loginError: ''
     };
   }
 
   handleChange = (event) => {
-    this.setState({
-      [event.target.name]: event.target.value,
-    });
     if (event.target.value !== '') {
       this.setState({
+        [event.target.name]: event.target.value,
         emptyFields: { ...this.state.emptyFields, [event.target.name]: false },
       });
     } else {
       this.setState({
+        [event.target.name]: event.target.value,
         emptyFields: { ...this.state.emptyFields, [event.target.name]: true },
       });
     }
@@ -43,57 +44,35 @@ class Login extends Component {
 
   handleSubmit = (event) => {
     event.preventDefault();
-    this.setState({
-      showErrors: false,
-    });
-    // check that all fields are filled
+    this.setState({ showErrors: false });
+    // if fields are filled, submit request
     if (this.checkFieldsAreFilled()) {
-      // then submit form
-      this.login();
+      this.login({
+        email: this.state.email,
+        password: this.state.password,
+      });
     }
   };
 
-  login = () => {
-    const body = {
-      email: this.state.email,
-      password: this.state.password,
-    };
-
-    const options = {
-      url: 'https://players-api.developer.alchemy.codes/api/login',
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      form: body,
-    };
-
-    // this is redirecting to '/roster' optimistically, before the http request even begins
-    // certainly nonsensical, but the only way I can get the cypress test to pass at moment
-    // redirecting AFTER http request resolves, leaves cypress saying it's taken too long
-    // curious as to better practice here!
-    // setTimeout(() => {
-    // this.props.history.push('/roster');
-    // }, 300);
-
-    request(options, (errors, response, respBody) => {
-      const res = JSON.parse(respBody);
-      const { token } = res;
+  login = (payload) => {
+    fetchLogin(payload, (errors, response, body) => {
+      const res = JSON.parse(body);
       console.log(res);
-      // store jwt in localStorage
-      localStorage.setItem('token', token);
-
-      // TO DO: put following 2 lines inside conditional for if (res.success)
+      // if successful, store jwt in localStorage
       if (res.success) {
+        localStorage.setItem('token', res.token);
         this.props.setUser(res.user);
-        // this is where I'd have expected to redirect to '/roster'
-        this.props.history.push('/roster');
+      } else {
+        console.log(res.error.message)
+        this.setState({showErrors: true})
       }
     });
   };
 
   checkFieldsAreFilled = () => {
-    const values = Object.values(this.state.emptyFields);
+    const emptyFields = Object.values(this.state.emptyFields);
 
-    if (values.includes(true)) {
+    if (emptyFields.includes(true)) {
       this.setState({
         showErrors: true,
       });
@@ -111,44 +90,13 @@ class Login extends Component {
         <Grid textAlign="center" verticalAlign="middle" id="login-form">
           <Grid.Column style={{ maxWidth: 450 }}>
             {this.state.showErrors ? (
-              <RegistrationErrors errors={this.state.emptyFields} />
+              <RegistrationErrors emptyFields={this.state.emptyFields} error={this.state.error}/>
             ) : null}
 
-            <Form size="large">
-              <Segment raised id="login-form-body">
-                <Form.Field>
-                  <label htmlFor="email" id="email-label">
-                    Email:
-                    <Form.Input
-                      fluid
-                      type="text"
-                      name="email"
-                      placeholder="Email"
-                      id="email"
-                      onChange={this.handleChange}
-                    />
-                  </label>
-                </Form.Field>
-
-                <Form.Field>
-                  <label htmlFor="password" id="password-label">
-                    Password:
-                    <Form.Input
-                      fluid
-                      type="password"
-                      name="password"
-                      placeholder="Password"
-                      id="password"
-                      onChange={this.handleChange}
-                    />
-                  </label>
-                </Form.Field>
-
-                <button id="login-button" onClick={this.handleSubmit}>
-                  Login
-                </button>
-              </Segment>
-            </Form>
+            <LoginForm
+              handleChange={this.handleChange}
+              handleSubmit={this.handleSubmit}
+            />
           </Grid.Column>
         </Grid>
       </div>

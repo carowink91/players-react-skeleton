@@ -23,6 +23,7 @@ class App extends Component {
   setUser = (user) => {
     this.setState({
       user,
+      currentNavLink: 'roster',
     });
   };
 
