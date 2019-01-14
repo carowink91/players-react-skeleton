@@ -19,7 +19,7 @@ class Login extends Component {
     this.state = {
       email: '',
       password: '',
-      showErrors: true,
+      showErrors: false,
       emptyFields: {
         email: true,
         password: true,
@@ -64,7 +64,7 @@ class Login extends Component {
         this.props.setUser(res.user);
       } else {
         console.log(res.error.message)
-        this.setState({showErrors: true})
+        this.setState({showErrors: true, loginError: res.error.message})
       }
     });
   };
@@ -90,7 +90,7 @@ class Login extends Component {
         <Grid textAlign="center" verticalAlign="middle" id="login-form">
           <Grid.Column style={{ maxWidth: 450 }}>
             {this.state.showErrors ? (
-              <RegistrationErrors emptyFields={this.state.emptyFields} error={this.state.error}/>
+              <RegistrationErrors emptyFields={this.state.emptyFields} loginError={this.state.loginError}/>
             ) : null}
 
             <LoginForm

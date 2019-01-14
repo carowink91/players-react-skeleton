@@ -3,30 +3,27 @@ import React, { Component } from 'react';
 class RegistrationErrors extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      emptyFields: this.renderErrors(),
-    };
   }
 
-  renderErrors = () => {
-    const emptyFields = [];
-    const values = Object.values(this.props.emptyFields);
-    const keys = Object.keys(this.props.emptyFields);
+getEmptyFields = () => {
+  let empties = [];
 
-    // note to self: below, tests prohibit "i++" unary operator
-    for (let i = 0; i < values.length; i + 1) {
-      if (values[i] === true) {
-        emptyFields.push(keys[i]);
-      }
+  for (const key in this.props.emptyFields){
+    if (this.props.emptyFields[key] === true){
+      empties.push(key)
     }
-    return emptyFields;
-  };
+  }
+  return empties
+}
 
   render() {
     return (
-      <div>
+      <div id="errors">
         <h3>Errors:</h3>
-        
+        <div>
+        {this.getEmptyFields().map((field) => <div key={field.length}>{field} cannot be empty.</div>)}
+        {this.props.loginError}
+        </div>
       </div>
     );
   }

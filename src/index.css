@@ -124,6 +124,14 @@ a.text {
   background-color: rgb(203, 100, 96);
 }
 
+/* RegistrationErrors */
+#errors{
+  color: red;
+  background-color: rgb(247, 245, 200);
+  border-style: solid;
+  border-color: red;
+}
+
 /*  Registration Page */
 
 .register-background {
