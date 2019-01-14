@@ -3,6 +3,7 @@ import request from 'request';
 import { Redirect } from 'react-router-dom';
 import { Grid, Header, Segment, Card, Button } from 'semantic-ui-react';
 import Navbar from './Navbar';
+import { fetchGetPlayers, fetchDeletePlayer } from '../Fetches';
 
 class Roster extends Component {
   constructor(props) {
@@ -13,38 +14,22 @@ class Roster extends Component {
   }
 
   componentDidMount() {
-    this.fetchPlayers();
-  }
-
-  fetchPlayers = () => {
     const token = localStorage.getItem('token');
-
-    const options = {
-      url: 'https://players-api.developer.alchemy.codes/api/players',
-      method: 'GET',
-      headers: { Authorization: `Bearer ${token}` },
-    };
-
-    request(options, (error, response, body) => {
+    fetchGetPlayers(token, (errors, response, body) => {
       const { players } = JSON.parse(body);
       this.setState({
         players,
       });
     });
-  };
+  }
 
   deletePlayer = (event) => {
     const token = localStorage.getItem('token');
     const playerID = event.target.dataset.id;
 
-    const options = {
-      url: `https://players-api.developer.alchemy.codes/api/players/${playerID}`,
-      method: 'DELETE',
-      headers: { Authorization: `Bearer ${token}` },
-    };
-
-    request(options, (error, response, body) => {
+    fetchDeletePlayer(token, playerID, (errors, response, body) => {
       const res = JSON.parse(body);
+      console.log(res);
       if (res.success) {
         this.deletePlayerFromState(playerID);
       }
@@ -62,9 +47,6 @@ class Roster extends Component {
   };
 
   render() {
-    // initally had logic here to prevent user from accessing Roster if they were NOT signed in
-    // but the e2e tests seem not to allow it
-
     if (!localStorage.getItem('token')) {
       return <Redirect to="/" />;
     }
@@ -77,8 +59,7 @@ class Roster extends Component {
             textAlign="center"
             style={{ background: 'rgb(56, 65, 93)', height: '110vh' }}
           >
-
-            <Navbar logout={this.props.logout}/>
+            <Navbar logout={this.props.logout} />
           </Grid.Column>
 
           <Grid.Column
@@ -160,7 +141,3 @@ class Roster extends Component {
 }
 
 export default Roster;
-
-// if (!localStorage.getItem('token')) {
-//   return <Redirect to="/" />;
-// }

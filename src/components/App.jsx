@@ -9,7 +9,7 @@ import Home from './Home';
 import Login from './Login';
 import Register from './Register';
 import Roster from './Roster';
-import NewPlayerForm from './NewPlayerForm';
+import AddPlayer from './AddPlayer';
 import Wager from './Wager';
 
 class App extends Component {
@@ -74,7 +74,7 @@ class App extends Component {
             exact
             path="/player/new"
             render={props => (
-              <NewPlayerForm
+              <AddPlayer
                 {...props}
                 addNewPlayer={this.addNewPlayer}
                 logout={this.logout}

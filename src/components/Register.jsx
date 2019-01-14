@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
-import request from 'request';
+import { fetchPostNewUser } from '../Fetches';
 import RegistrationErrors from './RegistrationErrors';
+import RegistrationForm from './RegistrationForm';
 import {
   Form,
   Button,
@@ -45,23 +46,17 @@ class Register extends Component {
         () => this.checkPasswordMatch(),
       );
     } else {
-      this.setState(
-        {
-          requestError: '',
-          [event.target.name]: event.target.value,
-          emptyFields: { ...this.state.emptyFields, [event.target.name]: true },
-        },
-        () => this.checkPasswordMatch(),
-      );
+      this.setState({
+        requestError: '',
+        [event.target.name]: event.target.value,
+        emptyFields: { ...this.state.emptyFields, [event.target.name]: true },
+      });
     }
   };
 
   submitRegistration = (event) => {
     event.preventDefault();
-    this.setState({
-      showErrors: false,
-    });
-
+    this.setState({ showErrors: false });
     // check all fields are filled and passwords match
     if (this.checkPasswordMatch() && this.checkFieldsAreFilled()) {
       const body = {
@@ -71,35 +66,24 @@ class Register extends Component {
         password: this.state.password,
         confirm_password: this.state.confirmPassword,
       };
-
-      const headers = {
-        'Content-Type': 'application/json',
-      };
-
-      // Configure the request
-      const options = {
-        url: 'https://players-api.developer.alchemy.codes/api/user',
-        method: 'POST',
-        headers,
-        form: body,
-      };
-      // Start the request
-      request(options, (error, response, respBody) => {
-        const res = JSON.parse(respBody);
-        console.log(res);
-        // if successful, store jwt in localStorage
-        if (res.success) {
-          localStorage.setItem('token', res.token);
-          this.props.setUser(res.user);
-        } else {
-          console.log(res.error.message);
-          this.setState({
-            showErrors: true,
-            requestError: 'Email already in use.',
-          });
-        }
-      });
+      this.register(body);
     }
+  };
+
+  register = (payload) => {
+    fetchPostNewUser(payload, (errors, response, body) => {
+      const res = JSON.parse(body);
+      // if successful, store jwt in localStorage
+      if (res.success) {
+        localStorage.setItem('token', res.token);
+        this.props.setUser(res.user);
+      } else {
+        this.setState({
+          showErrors: true,
+          requestError: 'Email already in use.',
+        });
+      }
+    });
   };
 
   checkFieldsAreFilled = () => {
@@ -115,25 +99,17 @@ class Register extends Component {
 
   checkPasswordMatch = () => {
     if (this.state.password !== this.state.confirmPassword) {
-      console.log(this.state.password);
-      console.log(this.state.confirmPassword);
-      console.log('no match');
       this.setState({
         passwordError: 'Passwords must match.',
         showErrors: true,
       });
       return false;
     }
-    console.log(this.state.password);
-    console.log(this.state.confirmPassword);
-    console.log('yes match');
     this.setState({ passwordError: '' });
     return true;
   };
 
-  passUser = (user) => {
-    this.props.setUser(user);
-  };
+  passUser = user => this.props.setUser(user);
 
   render() {
     if (localStorage.getItem('token')) {
@@ -152,82 +128,10 @@ class Register extends Component {
               />
             ) : null}
 
-            {this.state.showPasswordAlert ? (
-              <div>Passwords must match.</div>
-            ) : null}
-
-            <Form size="large">
-              <Segment raised id="register-form-body">
-                <Form.Field>
-                  <label htmlFor="firstName" id="firstName-label">
-                    First Name:
-                    <Form.Input
-                      type="text"
-                      id="firstName"
-                      name="firstName"
-                      placeholder="First Name"
-                      onChange={this.handleChange}
-                    />
-                  </label>
-                </Form.Field>
-
-                <Form.Field>
-                  <label htmlFor="lastName" id="lastName-label">
-                    Last Name:
-                    <Form.Input
-                      type="text"
-                      id="lastName"
-                      name="lastName"
-                      placeholder="Last Name"
-                      onChange={this.handleChange}
-                    />
-                  </label>
-                </Form.Field>
-
-                <Form.Field>
-                  <label htmlFor="email" id="email-label">
-                    Email:
-                    <Form.Input
-                      type="text"
-                      id="email"
-                      name="email"
-                      placeholder="Email"
-                      onChange={this.handleChange}
-                    />
-                  </label>
-                </Form.Field>
-
-                <Form.Field>
-                  <label htmlFor="password" id="password-label">
-                    Password:
-                    <Form.Input
-                      type="password"
-                      id="password"
-                      name="password"
-                      placeholder="Password"
-                      onChange={this.handleChange}
-                    />
-                  </label>
-                </Form.Field>
-
-                <Form.Field>
-                  <label htmlFor="confirmPassword" id="confirmPassword-label">
-                    Confirm Password:
-                    <Form.Input
-                      type="password"
-                      id="confirmPassword"
-                      name="confirmPassword"
-                      placeholder="Confirm Password"
-                      onChange={this.handleChange}
-                    />
-                  </label>
-                </Form.Field>
-
-                <button id="register-button" onClick={this.submitRegistration}>
-                  Register
-                </button>
-              </Segment>
-            </Form>
+            <RegistrationForm
+              handleChange={this.handleChange}
+              submitRegistration={this.submitRegistration}
+            />
           </Grid.Column>
         </Grid>
       </div>

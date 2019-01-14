@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
-import fetchLogin from '../Fetches';
+import { fetchLogin } from '../Fetches';
 import LoginForm from './LoginForm';
 import RegistrationErrors from './RegistrationErrors';
 import {
@@ -71,7 +71,6 @@ class Login extends Component {
 
   checkFieldsAreFilled = () => {
     const emptyFields = Object.values(this.state.emptyFields);
-
     if (emptyFields.includes(true)) {
       this.setState({
         showErrors: true,

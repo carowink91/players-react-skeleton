@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Segment, Form, Radio } from 'semantic-ui-react';
 import request from 'request';
 import Rules from './Rules';
+import {fetchGetPlayers } from '../Fetches'
 import RadioButtons from './RadioButtons';
 
 class WagerInstructions extends Component {
@@ -15,25 +16,14 @@ class WagerInstructions extends Component {
   }
 
   componentDidMount() {
-    this.fetchPlayers();
-  }
-
-  fetchPlayers = () => {
     const token = localStorage.getItem('token');
-
-    const options = {
-      url: 'https://players-api.developer.alchemy.codes/api/players',
-      method: 'GET',
-      headers: { Authorization: `Bearer ${token}` },
-    };
-
-    request(options, (error, response, body) => {
-      const { players } = JSON.parse(body);
+    fetchGetPlayers(token, (errors, response, body) => {
+          const { players } = JSON.parse(body);
       this.setState({
         players,
       });
-    });
-  };
+    })
+  }
 
   wagerOptions = [
     { text: 'One Grandpa', value: 'one' },
@@ -41,11 +31,10 @@ class WagerInstructions extends Component {
     { text: 'Three Grandpas', value: 'three' },
   ];
 
-  setWager = (event) => {
-    this.setState({
-      wager: event.currentTarget.children[0].value,
-    });
-  };
+  setWager = event =>
+    this.setState({ wager: event.currentTarget.children[0].value });
+
+  resetGame = () => this.setState({ bingoPieces: '' });
 
   drawBingo = () => {
     if (this.state.bingoPieces) {
@@ -62,13 +51,9 @@ class WagerInstructions extends Component {
     this.setState({ bingoPieces: pieces });
   };
 
-  resetGame = () => {
-    this.setState({ bingoPieces: '' });
-  };
 
   getInstructions = () => {
     const pieces = this.state.bingoPieces;
-
     switch (pieces) {
       case '':
         return "Click 'Draw' to draw 2 bingo pieces!";

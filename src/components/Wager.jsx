@@ -28,7 +28,7 @@ class Wager extends Component {
             textAlign="center"
             style={{ background: 'rgb(56, 65, 93)', height: '110vh' }}
           >
-            <Navbar logout={this.props.logout}  />
+            <Navbar logout={this.props.logout} />
           </Grid.Column>
 
           <Grid.Column
@@ -55,5 +55,3 @@ class Wager extends Component {
 }
 
 export default Wager;
-
-// https://pixfeeds.com/images/11/358594/640-26187499-bingo-cards.jpg
