@@ -1,5 +1,6 @@
 import React, { Component, Fragment } from 'react';
 import request from 'request';
+import RosterCard from './RosterCard';
 import { Redirect } from 'react-router-dom';
 import { Grid, Header, Segment, Card, Button } from 'semantic-ui-react';
 import Navbar from './Navbar';
@@ -77,59 +78,11 @@ class Roster extends Component {
                 {!this.state.players
                   ? null
                   : this.state.players.map(player => (
-                    <Fragment>
-                      <Card
-                        key={player.id}
-                        style={{
-                            opacity: 0.9,
-                            width: '15.5vw',
-                            marginLeft: '5vw',
-                            marginRight: '5vw',
-                          }}
-                      >
-                        <Card.Content style={{ background: 'grey' }}>
-                          <Card.Header
-                            style={{
-                                color: 'lightblue',
-                                fontSize: '1.7em',
-                                fontFamily: 'Satisfy',
-                              }}
-                          >
-                            {player.last_name}, {player.first_name}
-                          </Card.Header>
-                          <Card.Meta
-                            style={{
-                                color: 'white',
-                                fontSize: '.9em',
-                                fontFamily: 'Merienda',
-                              }}
-                          >
-                              rating: {player.rating}
-                          </Card.Meta>
-                          <Card.Header
-                            style={{
-                                color: 'black',
-                                fontSize: '1.1em',
-                                fontFamily: 'Merienda',
-                                padding: '.5em',
-                              }}
-                          >
-                              handedness: {player.handedness}
-                          </Card.Header>
-                        </Card.Content>
-                        <Button
-                          basic
-                          color="red"
-                          style={{ fontFamily: 'Merienda' }}
-                          className="delete"
-                          onClick={this.deletePlayer}
-                          data-id={player.id}
-                          key={player.id + 10}
-                        >
-                            delete player
-                        </Button>
-                      </Card>
-                    </Fragment>
+                    <RosterCard
+                      key={player.id.slice(-2)}
+                      player={player}
+                      deletePlayer={this.deletePlayer}
+                    />
                     ))}
               </Card.Group>
             </div>

@@ -85,7 +85,7 @@ class AddPlayer extends Component {
       } else {
         this.setState({
           showErrors: true,
-          requestError: res.error.message,
+          requestError: 'Rating must contain 1-4 digits.',
         });
       }
     });

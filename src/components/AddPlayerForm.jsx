@@ -53,6 +53,7 @@ class AddPlayerForm extends Component {
                 type="text"
                 name="rating"
                 id="rating"
+                placeholder="####"
                 onChange={this.props.handleChange}
               />
             </label>
