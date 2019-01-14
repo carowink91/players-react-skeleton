@@ -104,12 +104,10 @@ class NewPlayerForm extends Component {
       {
         text: 'left',
         value: 'left',
-        // image: { avatar: true, src: '/images/avatar/small/jenny.jpg' },
       },
       {
         text: 'right',
         value: 'right',
-        // image: { avatar: true, src: '/images/avatar/small/jenny.jpg' },
       },
     ];
 

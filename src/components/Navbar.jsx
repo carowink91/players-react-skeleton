@@ -9,18 +9,20 @@ class Navbar extends Component {
   render() {
     return (
       <div id="navbar">
-        <div className="navlink top">stats</div>
         <div className="navlink top">
-          <a href="/roster">pop roster</a>
+          <a href="/roster">roster</a>
         </div>
-        <div>
+
+        <div className="navlink middle">
           <a href="/player/new">add a new pop</a>
         </div>
-        <div className="navlink top">
+
+        <div className="navlink middle">
           <a href="/wager">wager a pop</a>
         </div>
+
         <div className="navlink bottom" onClick={this.props.logout}>
-          logout
+          <a href="/">logout</a>
         </div>
       </div>
     );
