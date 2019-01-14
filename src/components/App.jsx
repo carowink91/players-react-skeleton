@@ -6,11 +6,11 @@ import {
   withRouter,
 } from 'react-router-dom';
 import Home from './Home';
-import Login from './Login';
-import Register from './Register';
-import Roster from './Roster';
-import AddPlayer from './AddPlayer';
-import Wager from './Wager';
+import Login from '../containers/Login';
+import Register from '../containers/Register';
+import Roster from '../containers/Roster';
+import AddPlayer from '../containers/AddPlayer';
+import Wager from '../containers/Wager';
 
 class App extends Component {
   constructor(props) {

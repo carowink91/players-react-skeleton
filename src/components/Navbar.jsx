@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
 
-// Making navbar from scratch because vertical navbars from Semantic can be finicky
+// making Navbar from scratch because
+// vertical navbars from Semantic can be finicky
 class Navbar extends Component {
   constructor(props) {
     super(props);

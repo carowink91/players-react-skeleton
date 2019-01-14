@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { Segment, Form, Radio } from 'semantic-ui-react';
 import request from 'request';
-import Rules from './Rules';
-import {fetchGetPlayers } from '../Fetches'
-import RadioButtons from './RadioButtons';
+import Rules from '../components/Rules';
+import { fetchGetPlayers } from '../Fetches';
+import RadioButtons from '../components/RadioButtons';
 
 class WagerInstructions extends Component {
   constructor(props) {
@@ -18,11 +18,11 @@ class WagerInstructions extends Component {
   componentDidMount() {
     const token = localStorage.getItem('token');
     fetchGetPlayers(token, (errors, response, body) => {
-          const { players } = JSON.parse(body);
+      const { players } = JSON.parse(body);
       this.setState({
         players,
       });
-    })
+    });
   }
 
   wagerOptions = [
@@ -50,7 +50,6 @@ class WagerInstructions extends Component {
     const pieces = bingoPieces[randomIndex];
     this.setState({ bingoPieces: pieces });
   };
-
 
   getInstructions = () => {
     const pieces = this.state.bingoPieces;

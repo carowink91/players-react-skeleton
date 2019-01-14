@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
 import { fetchLogin } from '../Fetches';
-import LoginForm from './LoginForm';
-import RegistrationErrors from './RegistrationErrors';
+import LoginForm from '../components/LoginForm';
+import RegistrationErrors from '../components/RegistrationErrors';
 import {
   Form,
   Button,

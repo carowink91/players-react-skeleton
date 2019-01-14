@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import request from 'request';
-import RegistrationErrors from './RegistrationErrors';
+import RegistrationErrors from '../components/RegistrationErrors';
 import { Redirect } from 'react-router-dom';
 import { fetchPostNewPlayer } from '../Fetches';
-import AddPlayerForm from './AddPlayerForm';
-import Navbar from './Navbar';
+import AddPlayerForm from '../components/AddPlayerForm';
+import Navbar from '../components/Navbar';
 import {
   Grid,
   Dropdown,

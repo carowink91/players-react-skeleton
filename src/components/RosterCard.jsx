@@ -16,7 +16,7 @@ class RosterCard extends Component {
           <Card.Header
             style={{
               color: 'lightblue',
-              fontSize: '1.7em',
+              fontSize: '3.2vmin',
               fontFamily: 'Satisfy',
             }}
           >
@@ -25,7 +25,7 @@ class RosterCard extends Component {
           <Card.Meta
             style={{
               color: 'white',
-              fontSize: '.9em',
+              fontSize: '1.9vmin',
               fontFamily: 'Merienda',
             }}
           >
@@ -34,7 +34,7 @@ class RosterCard extends Component {
           <Card.Header
             style={{
               color: 'black',
-              fontSize: '1.1em',
+              fontSize: '2.2vmin',
               fontFamily: 'Merienda',
               padding: '.5em',
             }}

@@ -6,7 +6,7 @@ const Home = () => (
     <Grid.Row>
       <Grid.Column width={7} className="column">
         <div className="top-left">
-          <div className="text">PopPop</div>
+          <div className="text">GranData</div>
         </div>
       </Grid.Column>
 
@@ -29,8 +29,8 @@ const Home = () => (
       </Grid.Column>
 
       <Grid.Column width={7} className="column">
-        <div className="bottom-right">
-          <div className="text">The international grandpa database.</div>
+        <div className="bottom-right text" style={{ textWrap: 'wrap' }}>
+          The international grandfather database.
         </div>
       </Grid.Column>
     </Grid.Row>

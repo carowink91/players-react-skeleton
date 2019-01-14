@@ -1,9 +1,9 @@
 import React, { Component, Fragment } from 'react';
 import request from 'request';
-import RosterCard from './RosterCard';
+import RosterCard from '../components/RosterCard';
 import { Redirect } from 'react-router-dom';
 import { Grid, Header, Segment, Card, Button } from 'semantic-ui-react';
-import Navbar from './Navbar';
+import Navbar from '../components/Navbar';
 import { fetchGetPlayers, fetchDeletePlayer } from '../Fetches';
 
 class Roster extends Component {
@@ -70,10 +70,15 @@ class Roster extends Component {
             style={{ paddingTop: '15vh' }}
           >
             <div id="roster">
-              <h1 style={{ fontSize: '35px' }}>Pop Roster</h1>
+              <div id="roster-header">Grandpa Roster</div>
+
               <Card.Group
                 itemsPerRow={3}
-                style={{ marginLeft: '5vw', marginRight: '5vw' }}
+                style={{
+                  marginLeft: '5vw',
+                  marginRight: '5vw',
+                  overflow: 'auto',
+                }}
               >
                 {!this.state.players
                   ? null

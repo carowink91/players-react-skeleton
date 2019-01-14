@@ -10,7 +10,7 @@ body {
 /*  Background Wallpapers */
 
 #home {
-  background-image: url('../Images/chess2.jpg');
+  background-image: url('../Images/chess7.jpeg');
 
   /* background-image: url('https://cdn.pixabay.com/photo/2015/10/11/12/48/chess-982260__340.jpg'); */
 
@@ -32,66 +32,70 @@ body {
 }
 
 .text {
-  color: white;
+  color: rgb(247, 245, 200);
+
+  /* color: rgb(92, 49, 63); */
   z-index: -1;
 }
 
 a.text {
-  color: aqua;
+  color: lightblue;
+
+  /* color: rgb(247, 245, 200); */
 }
 
 .top-left {
-  font-size: 3rem;
+  font-size: 8vmin;
   overflow: auto;
-  background-color: grey;
+  background-color: rgb(56, 65, 93);
   border-radius: 5px;
-  opacity: 0.6;
+  opacity: 0.9;
   margin-top: 10vh;
   max-height: 30vh;
   z-index: -1;
+  max-width: 35vw;
 }
 
 .bottom-left {
-  font-size: 1.7rem;
-  background-color: grey;
+  font-size: 4vmin;
+  background-color: rgb(56, 65, 93);
   border-radius: 5px;
-  opacity: 0.6;
+  opacity: 0.9;
   margin-top: 5vh;
   max-height: 30vh;
+  max-width: 35vw;
 }
 
 .top-right {
-  font-size: 1.7rem;
-  background-color: grey;
+  font-size: 4vmin;
+  background-color: rgb(56, 65, 93);
   border-radius: 5px;
-  opacity: 0.6;
+  opacity: 0.9;
   margin-top: 10vh;
   max-height: 30vh;
+  max-width: 35vw;
 }
 
 .bottom-right {
-  font-size: 1.3rem;
-  background-color: grey;
+  font-size: 2.5vmin;
+  background-color: rgb(56, 65, 93);
   border-radius: 5px;
-  opacity: 0.6;
+  opacity: 0.9;
   margin-top: 5vh;
   max-height: 30vh;
-  overflow: auto;
 }
 
 /*   LOGIN PAGE */
 
 .login-background {
-
-  /* background-image: url('../Images/OldWallpaper.jpg'); */
-  background-image: url('https://c1.staticflickr.com/5/4221/34997833906_218d223980_b.jpg');
+  background-image: url('../Images/Bench.jpg');
   background-size: cover;
   height: 100vh;
   width: 100vw;
 }
 
 #login-form {
-  padding-top: 34vh;
+  padding-top: 35vh;
 }
 
 #login-form-body,
@@ -187,10 +191,21 @@ a.text {
   /* margin-left: 3vw; */
 }
 
+#r-background {
+  background-color: grey;
+}
+
+#roster-header {
+  font-size: 4.5em;
+  font-family: 'Satisfy';
+  color: rgb(92, 49, 63);
+}
+
 #roster-background {
   background-image: url('../Images/hats.jpg');
   background-size: cover;
   height: 110vh;
+  background-repeat: repeat-y;
 }
 
 #nav-column {
@@ -231,6 +246,7 @@ a.text {
   font-size: 0.9em;
   font-weight: bold;
   padding: 10px 20px 10px 20px;
+  margin-right: 1em;
 }
 
 #create-new-player-button {
@@ -278,9 +294,21 @@ a.text {
 .ui.dropdown .menu .selected.item,
 .ui.dropdown.selected,
 .ui.dropdown .menu > .item,
+.ui.dropdown .menu > .item:hover,
 .ui.dropdown .menu {
+
+  /* background-color: black; */
+}
+
+div.active.selected.item,
+div.item,
+div.selected.item,
+div#handedness.ui.selection.dropdown {
+  background-color: rgb(203, 100, 96) !important;
+}
+
+div.default.text {
   color: black !important;
-  background-color: red;
 }
 
 #rules {

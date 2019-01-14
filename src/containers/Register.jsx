@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
 import { fetchPostNewUser } from '../Fetches';
-import RegistrationErrors from './RegistrationErrors';
-import RegistrationForm from './RegistrationForm';
+import RegistrationErrors from '../components/RegistrationErrors';
+import RegistrationForm from '../components/RegistrationForm';
 import {
   Form,
   Button,

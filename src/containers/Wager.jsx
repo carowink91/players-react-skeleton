@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Navbar from './Navbar';
+import Navbar from '../components/Navbar';
 import { Redirect } from 'react-router-dom';
 import WagerInstructions from './WagerInstructions';
 import {
