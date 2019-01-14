@@ -125,11 +125,14 @@ a.text {
 }
 
 /* RegistrationErrors */
-#errors{
+
+#errors {
   color: red;
   background-color: rgb(247, 245, 200);
   border-style: solid;
   border-color: red;
+  min-height: 3vh;
+  font-size: 16px;
 }
 
 /*  Registration Page */

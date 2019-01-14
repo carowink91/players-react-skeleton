@@ -20,22 +20,24 @@ class Login extends Component {
       email: '',
       password: '',
       showErrors: false,
+      requestError: '',
       emptyFields: {
         email: true,
         password: true,
       },
-      loginError: ''
     };
   }
 
   handleChange = (event) => {
     if (event.target.value !== '') {
       this.setState({
+        requestError: '',
         [event.target.name]: event.target.value,
         emptyFields: { ...this.state.emptyFields, [event.target.name]: false },
       });
     } else {
       this.setState({
+        requestError: '',
         [event.target.name]: event.target.value,
         emptyFields: { ...this.state.emptyFields, [event.target.name]: true },
       });
@@ -57,14 +59,12 @@ class Login extends Component {
   login = (payload) => {
     fetchLogin(payload, (errors, response, body) => {
       const res = JSON.parse(body);
-      console.log(res);
       // if successful, store jwt in localStorage
       if (res.success) {
         localStorage.setItem('token', res.token);
         this.props.setUser(res.user);
       } else {
-        console.log(res.error.message)
-        this.setState({showErrors: true, loginError: res.error.message})
+        this.setState({ showErrors: true, requestError: res.error.message });
       }
     });
   };
@@ -82,6 +82,7 @@ class Login extends Component {
   };
 
   render() {
+    // if user is logged in, redirect to roster page
     if (localStorage.getItem('token')) {
       return <Redirect to="/roster" />;
     }
@@ -90,7 +91,10 @@ class Login extends Component {
         <Grid textAlign="center" verticalAlign="middle" id="login-form">
           <Grid.Column style={{ maxWidth: 450 }}>
             {this.state.showErrors ? (
-              <RegistrationErrors emptyFields={this.state.emptyFields} loginError={this.state.loginError}/>
+              <RegistrationErrors
+                emptyFields={this.state.emptyFields}
+                requestError={this.state.requestError}
+              />
             ) : null}
 
             <LoginForm

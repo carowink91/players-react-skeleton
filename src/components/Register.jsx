@@ -21,6 +21,9 @@ class Register extends Component {
       email: '',
       password: '',
       confirmPassword: '',
+      showErrors: false,
+      passwordError: '',
+      requestError: '',
       emptyFields: {
         firstName: true,
         lastName: true,
@@ -28,9 +31,6 @@ class Register extends Component {
         password: true,
         confirmPassword: true,
       },
-      showErrors: false,
-      passwordError: '',
-      registrationError: '',
     };
   }
 
@@ -38,6 +38,7 @@ class Register extends Component {
     if (event.target.value !== '') {
       this.setState(
         {
+          requestError: '',
           [event.target.name]: event.target.value,
           emptyFields: { ...this.state.emptyFields, [event.target.name]: false },
         },
@@ -46,6 +47,7 @@ class Register extends Component {
     } else {
       this.setState(
         {
+          requestError: '',
           [event.target.name]: event.target.value,
           emptyFields: { ...this.state.emptyFields, [event.target.name]: true },
         },
@@ -93,7 +95,7 @@ class Register extends Component {
           console.log(res.error.message);
           this.setState({
             showErrors: true,
-            loginError: 'Email already in use.',
+            requestError: 'Email already in use.',
           });
         }
       });
@@ -146,7 +148,7 @@ class Register extends Component {
               <RegistrationErrors
                 emptyFields={this.state.emptyFields}
                 passwordError={this.state.passwordError}
-                loginError={this.state.loginError}
+                requestError={this.state.requestError}
               />
             ) : null}
 
