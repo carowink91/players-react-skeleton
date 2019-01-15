@@ -101,7 +101,7 @@ class AddPlayer extends Component {
       <div>
         <Grid textAlign="center" verticalAlign="middle">
           <Grid.Column
-            width={2}
+            width={3}
             id="nav-column"
             textAlign="center"
             style={{ background: 'rgb(56, 65, 93)', height: '110vh' }}
@@ -109,7 +109,7 @@ class AddPlayer extends Component {
             <Navbar logout={this.props.logout} />
           </Grid.Column>
 
-          <Grid.Column width={14}>
+          <Grid.Column width={13}>
             <Grid
               textAlign="center"
               id="roster-background"

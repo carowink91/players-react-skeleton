@@ -23,7 +23,7 @@ class Wager extends Component {
         <Grid>
           <Grid.Column
             verticalAlign="middle"
-            width={2}
+            width={3}
             id="nav-column"
             textAlign="center"
             style={{ background: 'rgb(56, 65, 93)', height: '110vh' }}
@@ -32,7 +32,7 @@ class Wager extends Component {
           </Grid.Column>
 
           <Grid.Column
-            width={11}
+            width={10}
             id="wager-background"
             textAlign="center"
             style={{ height: '110vh' }}

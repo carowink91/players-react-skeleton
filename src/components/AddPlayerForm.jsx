@@ -21,7 +21,7 @@ class AddPlayerForm extends Component {
           id="new-player-form-body"
           style={{ backgroundColor: 'rgb(200, 169, 146)' }}
         >
-          <h1 style={{ fontSize: '35px' }}>add a new pop</h1>
+          <h1 style={{ fontSize: '35px', fontFamily: 'Merienda', color: 'rgb(117, 135, 147)' }}>Add A New Grandpa</h1>
           <Form.Field>
             <label htmlFor="firstName">
               First Name:

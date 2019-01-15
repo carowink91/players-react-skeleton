@@ -55,7 +55,7 @@ class Roster extends Component {
       <div>
         <Grid>
           <Grid.Column
-            width={2}
+            width={3}
             id="nav-column"
             textAlign="center"
             style={{ background: 'rgb(56, 65, 93)', height: '110vh' }}
@@ -64,7 +64,7 @@ class Roster extends Component {
           </Grid.Column>
 
           <Grid.Column
-            width={14}
+            width={13}
             textAlign="center"
             id="roster-background"
             style={{ paddingTop: '15vh' }}

@@ -12,17 +12,17 @@ class Navbar extends Component {
     return (
       <div id="navbar">
         <div className="navlink top">
-          <a href="/roster">roster</a>
+          <a href="/roster">Roster</a>
         </div>
 
         <div className="navlink middle">
           <a onClick={() => this.props.setNav('roster')} href="/player/new">
-            add a new pop
+            Add a Grandpa
           </a>
         </div>
 
         <div className="navlink middle">
-          <a href="/wager">wager a pop</a>
+          <a href="/wager">Wager a Grandpa</a>
         </div>
 
         <div className="navlink bottom" onClick={this.props.logout}>

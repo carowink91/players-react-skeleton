@@ -21,6 +21,10 @@ class WagerInstructions extends Component {
   }
 
   componentDidMount() {
+    this.getPlayers();
+  }
+
+  getPlayers = () => {
     const token = localStorage.getItem('token');
     fetchGetPlayers(token, (errors, response, body) => {
       const { players } = JSON.parse(body);
@@ -28,13 +32,7 @@ class WagerInstructions extends Component {
         players,
       });
     });
-  }
-
-  wagerOptions = [
-    { text: 'One Grandpa', value: 'one' },
-    { text: 'Two Grandpas', value: 'two' },
-    { text: 'Three Grandpas', value: 'three' },
-  ];
+  };
 
   setWager = (event) => {
     const wager = event.currentTarget.children[0].value;
@@ -52,79 +50,65 @@ class WagerInstructions extends Component {
       case 'reset':
         return 'Reset Game';
       case 'shortage':
-        return 'Not enough Grandpas';
+        return 'Not enough Grandpas! Add more to roster.';
       default:
     }
   };
 
   handleClick = () => {
+    // check that user has enough Grandpas to wager
     if (this.state.wager > this.state.players.length) {
       return this.setState({ gameState: 'shortage' });
     }
-    if (this.state.gameState === 'shortage') {
-      return;
+    // check that game is not paused
+    else if (this.checkGameState()) {
+      const bingoPieces = [
+        ' I-27 and O-74',
+        ' I-30 and O-64',
+        ' I-30 and I-27',
+        ' O-74 and N-41',
+      ];
+      // randomly select Bingo pieces
+      const randomIndex = Math.floor(Math.random() * 4);
+      const pieces = bingoPieces[randomIndex];
+      this.setState({ bingoPieces: pieces, gameState: 'reset' }, () => {
+        this.gainOrLoseGrandpas();
+      });
     }
-    if (this.state.gameState === 'reset') {
-      this.setState({ bingoPieces: '', gameState: 'draw' });
-      return;
+  };
+
+  checkGameState = () => {
+    switch (this.state.gameState) {
+      case 'shortage':
+        return false;
+      case 'reset':
+        return false;
+      default:
+        return true;
     }
-    const bingoPieces = [
-      ' I-27 and O-74',
-      ' I-30 and O-64',
-      ' I-30 and I-27',
-      ' O-74 and N-41',
-    ];
-    const randomIndex = Math.floor(Math.random() * 4);
-    const pieces = bingoPieces[randomIndex];
-    this.setState({ bingoPieces: pieces, gameState: 'reset' }, () => {
-      this.gainOrLoseGrandpas();
-    });
   };
 
   gainOrLoseGrandpas = () => {
+    const num = parseInt(this.state.wager);
     if (
       this.state.bingoPieces === ' I-27 and O-74' ||
       this.state.bingoPieces === ' I-30 and O-64'
     ) {
-      switch (this.state.wager) {
-        case '1':
-          this.gainGrandpas();
-          break;
-        case '2':
-          this.gainGrandpas();
-          this.gainGrandpas();
-          break;
-        case '3':
-          this.gainGrandpas();
-          this.gainGrandpas();
-          this.gainGrandpas();
-      }
+      // using a for loop keeps breaking the code
+      // instead, use forEach on an array of appropriate length
+      const array = new Array(num).fill('placeholder');
+      array.forEach(el => this.gainGrandpas());
     } else {
-      switch (this.state.wager) {
-        case '1':
-          this.setState({ players: [...this.state.players.slice(1)] });
-          this.loseGrandpas(this.state.players[0].id);
-          break;
-        case '2':
-          this.setState({ players: [...this.state.players.slice(2)] });
-          this.loseGrandpas(this.state.players[0].id);
-          this.loseGrandpas(this.state.players[1].id);
-          break;
-        case '3':
-          this.setState({ players: [...this.state.players.slice(3)] });
-          this.loseGrandpas(this.state.players[0].id);
-          this.loseGrandpas(this.state.players[1].id);
-          this.loseGrandpas(this.state.players[2].id);
-      }
+      const players = this.state.players.slice(0, num);
+      players.forEach(player => this.loseGrandpas(player.id));
     }
   };
 
   loseGrandpas = (id) => {
     const token = localStorage.getItem('token');
-
     fetchDeletePlayer(token, id, (errors, response, body) => {
       const res = JSON.parse(body);
-      console.log(res);
+      this.getPlayers();
     });
   };
 
@@ -138,7 +122,7 @@ class WagerInstructions extends Component {
     };
     fetchPostNewPlayer(body, (errors, response, body) => {
       const res = JSON.parse(body);
-      console.log(res);
+      this.getPlayers();
     });
   };
 
