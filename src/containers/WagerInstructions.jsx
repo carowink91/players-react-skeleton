@@ -94,7 +94,7 @@ class WagerInstructions extends Component {
       this.state.bingoPieces === ' I-27 and O-74' ||
       this.state.bingoPieces === ' I-30 and O-64'
     ) {
-      // using a for loop keeps breaking the code
+      // tried using a For Loop but it keeps breaking the code
       // instead, use forEach on an array of appropriate length
       const array = new Array(num).fill('placeholder');
       array.forEach(el => this.gainGrandpas());
