@@ -1,17 +1,9 @@
 import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
+import { Grid } from 'semantic-ui-react';
 import { fetchPostNewUser } from '../Fetches';
 import RegistrationErrors from '../components/RegistrationErrors';
 import RegistrationForm from '../components/RegistrationForm';
-import {
-  Form,
-  Button,
-  Segment,
-  Header,
-  Grid,
-  Image,
-  Message,
-} from 'semantic-ui-react';
 
 class Register extends Component {
   constructor(props) {
@@ -57,6 +49,8 @@ class Register extends Component {
   submitRegistration = (event) => {
     event.preventDefault();
     this.setState({ showErrors: false });
+    // this.props.history.push('/roster');
+
     // check all fields are filled and passwords match
     if (this.checkPasswordMatch() && this.checkFieldsAreFilled()) {
       const body = {

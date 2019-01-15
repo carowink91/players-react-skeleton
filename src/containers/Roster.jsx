@@ -1,8 +1,7 @@
-import React, { Component, Fragment } from 'react';
-import request from 'request';
-import RosterCard from '../components/RosterCard';
+import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
-import { Grid, Header, Segment, Card, Button } from 'semantic-ui-react';
+import { Grid, Card } from 'semantic-ui-react';
+import RosterCard from '../components/RosterCard';
 import Navbar from '../components/Navbar';
 import { fetchGetPlayers, fetchDeletePlayer } from '../Fetches';
 
@@ -15,6 +14,7 @@ class Roster extends Component {
   }
 
   componentDidMount() {
+    // let token = document.cookie.split("=")[1]
     const token = localStorage.getItem('token');
     fetchGetPlayers(token, (errors, response, body) => {
       const { players } = JSON.parse(body);
@@ -48,6 +48,12 @@ class Roster extends Component {
   };
 
   render() {
+    console.log('rendering roster')
+    console.log(localStorage.getItem('token'))
+
+    // if (!document.cookie) {
+    //   return <Redirect to="/" />;
+    // }
     if (!localStorage.getItem('token')) {
       return <Redirect to="/" />;
     }

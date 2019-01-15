@@ -7,11 +7,13 @@ class RegistrationErrors extends Component {
 
   getEmptyFields = () => {
     const empties = [];
-    for (const key in this.props.emptyFields) {
-      if (this.props.emptyFields[key] === true) {
-        empties.push(key);
+    const keys = Object.keys(this.props.emptyFields);
+    const values = Object.values(this.props.emptyFields);
+    values.forEach((value, index) => {
+      if (value === true) {
+        empties.push(keys[index]);
       }
-    }
+    });
     return empties;
   };
 

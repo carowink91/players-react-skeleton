@@ -1,10 +1,10 @@
 import request from 'request';
 
-const URL = 'https://players-api.developer.alchemy.codes';
+const URL = 'https://players-api.developer.alchemy.codes/api';
 
 export function fetchLogin(payload, func) {
   const options = {
-    url: 'https://players-api.developer.alchemy.codes/api/login',
+    url: `${URL}/login`,
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     form: payload,
@@ -15,7 +15,7 @@ export function fetchLogin(payload, func) {
 export function fetchPostNewPlayer(payload, func) {
   const token = localStorage.getItem('token');
   const options = {
-    url: 'https://players-api.developer.alchemy.codes/api/players',
+    url: `${URL}/players`,
     method: 'POST',
     headers: { Authorization: `Bearer ${token}` },
     form: payload,
@@ -25,7 +25,7 @@ export function fetchPostNewPlayer(payload, func) {
 
 export function fetchPostNewUser(payload, func) {
   const options = {
-    url: 'https://players-api.developer.alchemy.codes/api/user',
+    url: `${URL}/user`,
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     form: payload,
@@ -35,7 +35,7 @@ export function fetchPostNewUser(payload, func) {
 
 export function fetchGetPlayers(token, func) {
   const options = {
-    url: 'https://players-api.developer.alchemy.codes/api/players',
+    url: `${URL}/players`,
     method: 'GET',
     headers: { Authorization: `Bearer ${token}` },
   };
@@ -44,7 +44,7 @@ export function fetchGetPlayers(token, func) {
 
 export function fetchDeletePlayer(token, playerID, func) {
   const options = {
-    url: `https://players-api.developer.alchemy.codes/api/players/${playerID}`,
+    url: `${URL}/players/${playerID}`,
     method: 'DELETE',
     headers: { Authorization: `Bearer ${token}` },
   };

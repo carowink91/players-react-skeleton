@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import { Segment, Form, Radio } from 'semantic-ui-react';
-import request from 'request';
+import { Segment } from 'semantic-ui-react';
 import Rules from '../components/Rules';
 import {
   fetchGetPlayers,
@@ -43,89 +42,6 @@ class WagerInstructions extends Component {
     }
   };
 
-  renderButton = () => {
-    switch (this.state.gameState) {
-      case 'draw':
-        return 'Draw';
-      case 'reset':
-        return 'Reset Game';
-      case 'shortage':
-        return 'Not enough Grandpas! Add more to roster.';
-      default:
-    }
-  };
-
-  handleClick = () => {
-    // check that user has enough Grandpas to wager
-    if (this.state.wager > this.state.players.length) {
-      return this.setState({ gameState: 'shortage' });
-    }
-    // check that game is not paused
-    else if (this.checkGameState()) {
-      const bingoPieces = [
-        ' I-27 and O-74',
-        ' I-30 and O-64',
-        ' I-30 and I-27',
-        ' O-74 and N-41',
-      ];
-      // randomly select Bingo pieces
-      const randomIndex = Math.floor(Math.random() * 4);
-      const pieces = bingoPieces[randomIndex];
-      this.setState({ bingoPieces: pieces, gameState: 'reset' }, () => {
-        this.gainOrLoseGrandpas();
-      });
-    }
-  };
-
-  checkGameState = () => {
-    switch (this.state.gameState) {
-      case 'shortage':
-        return false;
-      case 'reset':
-        return false;
-      default:
-        return true;
-    }
-  };
-
-  gainOrLoseGrandpas = () => {
-    const num = parseInt(this.state.wager);
-    if (
-      this.state.bingoPieces === ' I-27 and O-74' ||
-      this.state.bingoPieces === ' I-30 and O-64'
-    ) {
-      // tried using a For Loop but it keeps breaking the code
-      // instead, use forEach on an array of appropriate length
-      const array = new Array(num).fill('placeholder');
-      array.forEach(el => this.gainGrandpas());
-    } else {
-      const players = this.state.players.slice(0, num);
-      players.forEach(player => this.loseGrandpas(player.id));
-    }
-  };
-
-  loseGrandpas = (id) => {
-    const token = localStorage.getItem('token');
-    fetchDeletePlayer(token, id, (errors, response, body) => {
-      const res = JSON.parse(body);
-      this.getPlayers();
-    });
-  };
-
-  gainGrandpas = () => {
-    const randomNum = (Math.floor(Math.random() * 9999999) + 1).toString();
-    const body = {
-      first_name: randomNum,
-      last_name: 'Bonus Grandpa',
-      rating: '9999',
-      handedness: 'left',
-    };
-    fetchPostNewPlayer(body, (errors, response, body) => {
-      const res = JSON.parse(body);
-      this.getPlayers();
-    });
-  };
-
   getInstructions = () => {
     const pieces = this.state.bingoPieces;
     switch (pieces) {
@@ -140,12 +56,95 @@ class WagerInstructions extends Component {
     }
   };
 
+  handleClick = () => {
+    // check that user has enough Grandpas to wager
+    if (this.state.wager > this.state.players.length) {
+      return this.setState({ gameState: 'shortage' });
+      // check that game is not paused
+    } else if (this.checkGameState()) {
+      const bingoPieces = [
+        ' I-27 and O-74',
+        ' I-30 and O-64',
+        ' I-30 and I-27',
+        ' O-74 and N-41',
+      ];
+      // randomly select Bingo pieces
+      const randomIndex = Math.floor(Math.random() * 4);
+      const pieces = bingoPieces[randomIndex];
+      return this.setState({ bingoPieces: pieces, gameState: 'reset' }, () =>
+        this.gainOrLoseGrandpas());
+    }
+    return '';
+  };
+
+  checkGameState = () => {
+    switch (this.state.gameState) {
+      case 'shortage':
+        return false;
+      case 'reset':
+        this.setState({gameState: 'draw', bingoPieces: ''})
+        return false;
+      default:
+        return true;
+    }
+  };
+
+  gainOrLoseGrandpas = () => {
+    const num = parseInt(this.state.wager, 10);
+    if (
+      this.state.bingoPieces === ' I-27 and O-74' ||
+      this.state.bingoPieces === ' I-30 and O-64'
+    ) {
+      // tried using a For Loop but it keeps breaking the code
+      // instead, use forEach on an array of appropriate length
+      const array = new Array(num).fill('placeholder');
+      array.forEach(() => this.gainGrandpas());
+    } else {
+      const players = this.state.players.slice(0, num);
+      players.forEach(player => this.loseGrandpas(player.id));
+    }
+  };
+
+  loseGrandpas = (id) => {
+    const token = localStorage.getItem('token');
+    fetchDeletePlayer(token, id, (errors, response, body) => {
+      this.getPlayers();
+    });
+  };
+
+  gainGrandpas = () => {
+    const randomNum = (Math.floor(Math.random() * 9999999) + 1).toString();
+    const body = {
+      first_name: randomNum,
+      last_name: 'Bonus Grandpa',
+      rating: '9999',
+      handedness: 'left',
+    };
+    fetchPostNewPlayer(body, (errors, response, respBody) => {
+      this.getPlayers();
+    });
+  };
+
+  renderButton = () => {
+    switch (this.state.gameState) {
+      case 'draw':
+        return 'Draw';
+      case 'reset':
+        return 'Reset Game';
+      case 'shortage':
+        return 'Not enough Grandpas! Add more to roster.';
+      default:
+        return ' ';
+    }
+  };
+
   render() {
     return (
       <div id="wager-column">
         <Rules />
         <Segment raised style={{ background: 'rgb(203, 100, 96)' }}>
           <RadioButtons
+
             setWager={this.setWager}
             currentWager={this.state.wager}
           />
@@ -154,14 +153,14 @@ class WagerInstructions extends Component {
             {this.renderButton()}
           </button>
 
-          <div id="bingo-piece">
+          <div className="instructions">
             YOU DREW: <br />
-            <div id="bingo-piece-detail">{this.state.bingoPieces}</div>
+            <div className="instructions-detail">{this.state.bingoPieces}</div>
           </div>
 
-          <div id="instructions">
+          <div className="instructions">
             INSTRUCTIONS: <br />
-            <div id="instructions-detail">{this.getInstructions()}</div>
+            <div className="instructions-detail">{this.getInstructions()}</div>
           </div>
         </Segment>
       </div>

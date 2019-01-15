@@ -1,18 +1,10 @@
 import React, { Component } from 'react';
-import request from 'request';
-import RegistrationErrors from '../components/RegistrationErrors';
 import { Redirect } from 'react-router-dom';
+import { Grid } from 'semantic-ui-react';
+import RegistrationErrors from '../components/RegistrationErrors';
 import { fetchPostNewPlayer } from '../Fetches';
 import AddPlayerForm from '../components/AddPlayerForm';
 import Navbar from '../components/Navbar';
-import {
-  Grid,
-  Dropdown,
-  Form,
-  Button,
-  Segment,
-  Header,
-} from 'semantic-ui-react';
 
 class AddPlayer extends Component {
   constructor(props) {
@@ -52,6 +44,8 @@ class AddPlayer extends Component {
   handleSubmit = (event) => {
     event.preventDefault();
     this.setState({ showErrors: false });
+    // this.props.history.push('/roster');
+
     // check that fields are filled
     if (this.checkFieldsAreFilled()) {
       // then submit form

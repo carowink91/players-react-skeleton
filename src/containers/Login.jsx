@@ -1,17 +1,9 @@
 import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
+import { Grid } from 'semantic-ui-react';
 import { fetchLogin } from '../Fetches';
 import LoginForm from '../components/LoginForm';
 import RegistrationErrors from '../components/RegistrationErrors';
-import {
-  Form,
-  Button,
-  Segment,
-  Header,
-  Grid,
-  Image,
-  Message,
-} from 'semantic-ui-react';
 
 class Login extends Component {
   constructor(props) {
@@ -47,6 +39,8 @@ class Login extends Component {
   handleSubmit = (event) => {
     event.preventDefault();
     this.setState({ showErrors: false });
+    // this.props.history.push('/roster');
+
     // if fields are filled, submit request
     if (this.checkFieldsAreFilled()) {
       this.login({
@@ -60,7 +54,9 @@ class Login extends Component {
     fetchLogin(payload, (errors, response, body) => {
       const res = JSON.parse(body);
       // if successful, store jwt in localStorage
+
       if (res.success) {
+        // document.cookie = `token=${res.token}`
         localStorage.setItem('token', res.token);
         this.props.setUser(res.user);
       } else {

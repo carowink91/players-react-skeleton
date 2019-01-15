@@ -9,6 +9,7 @@ describe('Roster Page', () => {
     );
   });
 
+
   it('Contains players', () => {
     cy.visit('/roster');
     cy.contains('Harry');

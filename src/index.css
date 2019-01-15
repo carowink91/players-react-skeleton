@@ -11,12 +11,6 @@ body {
 
 #home {
   background-image: url('../Images/Bench.jpg');
-
-  /* background-image: url('https://cdn.pixabay.com/photo/2015/10/11/12/48/chess-982260__340.jpg'); */
-
-  /* background-image: url('../Images/YarnWallpaper.jpg'); */
-
-  /* background-image: url('https://c1.staticflickr.com/5/4221/34997833906_218d223980_b.jpg'); */
   background-size: cover;
 }
 
@@ -40,8 +34,6 @@ body {
 
 a.text {
   color: lightblue;
-
-  /* color: rgb(247, 245, 200); */
 }
 
 .top-left {
@@ -104,7 +96,7 @@ a.text {
   opacity: 0.95;
 }
 
-#login-button {
+#login {
   background-color: rgb(200, 169, 146);
   border-style: none;
   border-radius: 5px;
@@ -154,7 +146,7 @@ a.text {
   padding-top: 20vh;
 }
 
-#register-button {
+#register {
   background-color: rgb(200, 169, 146);
   border-style: none;
   border-radius: 5px;
@@ -199,6 +191,7 @@ a.text {
   font-size: 4.5em;
   font-family: 'Satisfy';
   color: rgb(92, 49, 63);
+  text-shadow: 2px 2px 2px rgb(243, 223, 185);
 }
 
 #roster-background {
@@ -212,8 +205,6 @@ a.text {
   padding: 0;
 }
 
-
-
 .navlink.top,
 .navlink.middle,
 .navlink.bottom {
@@ -224,23 +215,22 @@ a.text {
   background-color: rgb(56, 65, 93);
 }
 
-.navlink a{
+.navlink a {
   color: rgb(247, 245, 200);
-
 }
 
-.navlink.top, .navlink.middle{
+.navlink.top,
+.navlink.middle {
+
   /* border-bottom-style: solid; */
 }
-
 
 .navlink:hover {
   background-color: rgb(72, 85, 115);
 }
 
-.navlink a:hover{
+.navlink a:hover {
   color: rgb(247, 245, 200);
-
 }
 
 * {
@@ -249,7 +239,7 @@ a.text {
 
 /*   New Player Page */
 
-#new-player-form-body{
+#new-player-form-body {
   margin-top: 10vh;
 }
 
@@ -263,7 +253,7 @@ a.text {
   margin-right: 1em;
 }
 
-#create-new-player-button {
+#create {
   background-color: rgb(69, 108, 170);
   border-style: none;
   border-radius: 5px;
@@ -335,14 +325,14 @@ div.default.text {
   font-size: 0.9em;
 }
 
-#bingo-piece,
-#instructions {
+.instructions {
   text-align: center;
   margin: 1em;
+  color: rgb(56, 65, 93);
 }
 
-#bingo-piece-detail,
-#instructions-detail {
+.instructions-detail {
   min-height: 2em;
-  color: white;
+  color: rgb(179, 201, 218)
+  /* color: rgb(56, 65, 93); */
 }
