@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
 import { Grid } from 'semantic-ui-react';
 import { fetchLogin } from '../Fetches';
+import request from 'request';
 import LoginForm from '../components/LoginForm';
 import RegistrationErrors from '../components/RegistrationErrors';
 
@@ -36,6 +37,7 @@ class Login extends Component {
     }
   };
 
+  // ORIGINAL HANDLE SUBMIT()
   handleSubmit = (event) => {
     event.preventDefault();
     this.setState({ showErrors: false });
@@ -50,13 +52,13 @@ class Login extends Component {
     }
   };
 
+  // ORIGINAL LOGIN()
   login = (payload) => {
     fetchLogin(payload, (errors, response, body) => {
       const res = JSON.parse(body);
-      // if successful, store jwt in localStorage
 
+      // if successful, store jwt in localStorage
       if (res.success) {
-        // document.cookie = `token=${res.token}`
         localStorage.setItem('token', res.token);
         this.props.setUser(res.user);
       } else {

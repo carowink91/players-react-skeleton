@@ -79,11 +79,24 @@ class AddPlayer extends Component {
       } else {
         this.setState({
           showErrors: true,
-          requestError: 'Rating must contain 1-4 digits.',
         });
+        this.setRequestError(res.error.message);
       }
     });
   };
+
+  setRequestError(error) {
+    if (error === 'Resource already exists.') {
+      this.setState({
+        requestError:
+          'This first name / last name combo is alredy in use. Please try another name combination.',
+      });
+    } else if (error === 'Invalid value for rating') {
+      this.setState({
+        requestError: 'Rating must contain 1-4 digits only.',
+      });
+    }
+  }
 
   cancel = () => this.props.history.push('/roster');
 

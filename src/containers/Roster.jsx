@@ -31,7 +31,6 @@ class Roster extends Component {
 
     fetchDeletePlayer(token, playerID, (errors, response, body) => {
       const res = JSON.parse(body);
-      console.log(res);
       if (res.success) {
         this.deletePlayerFromState(playerID);
       }
@@ -49,12 +48,6 @@ class Roster extends Component {
   };
 
   render() {
-    console.log('rendering roster');
-    console.log(localStorage.getItem('token'));
-
-    // if (!document.cookie) {
-    //   return <Redirect to="/" />;
-    // }
     if (!localStorage.getItem('token')) {
       return <Redirect to="/" />;
     }
