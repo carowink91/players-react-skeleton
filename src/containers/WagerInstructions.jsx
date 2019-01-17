@@ -82,7 +82,7 @@ class WagerInstructions extends Component {
       case 'shortage':
         return false;
       case 'reset':
-        this.setState({gameState: 'draw', bingoPieces: ''})
+        this.setState({ gameState: 'draw', bingoPieces: '' });
         return false;
       default:
         return true;
@@ -98,7 +98,7 @@ class WagerInstructions extends Component {
       // tried using a For Loop but it keeps breaking the code
       // instead, use forEach on an array of appropriate length
       const array = new Array(num).fill('placeholder');
-      array.forEach(() => this.gainGrandpas());
+      array.forEach(() => this.gainGrandpa());
     } else {
       const players = this.state.players.slice(0, num);
       players.forEach(player => this.loseGrandpas(player.id));
@@ -112,7 +112,7 @@ class WagerInstructions extends Component {
     });
   };
 
-  gainGrandpas = () => {
+  gainGrandpa = () => {
     const randomNum = (Math.floor(Math.random() * 9999999) + 1).toString();
     const body = {
       first_name: randomNum,
@@ -121,6 +121,12 @@ class WagerInstructions extends Component {
       handedness: 'left',
     };
     fetchPostNewPlayer(body, (errors, response, respBody) => {
+      const res = JSON.parse(respBody);
+      console.log(res);
+      // if Grandpa already exists by this name, retry
+      if (!res.success) {
+        this.gainGrandpa();
+      }
       this.getPlayers();
     });
   };
@@ -144,7 +150,6 @@ class WagerInstructions extends Component {
         <Rules />
         <Segment raised style={{ background: 'rgb(203, 100, 96)' }}>
           <RadioButtons
-
             setWager={this.setWager}
             currentWager={this.state.wager}
           />
