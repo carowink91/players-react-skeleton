@@ -6,8 +6,8 @@ const RosterCard = props => (
     style={{
       opacity: 0.9,
       width: '15.5vw',
-      marginLeft: '5vw',
-      marginRight: '5vw',
+      marginLeft: '3vw',
+      marginRight: '3vw',
     }}
   >
     <Card.Content style={{ background: 'grey' }}>

@@ -4,6 +4,7 @@ import { Grid, Card } from 'semantic-ui-react';
 import RosterCard from '../components/RosterCard';
 import Navbar from '../components/Navbar';
 import { fetchGetPlayers, fetchDeletePlayer } from '../Fetches';
+import NoPlayers from '../components/NoPlayers';
 
 class Roster extends Component {
   constructor(props) {
@@ -48,8 +49,8 @@ class Roster extends Component {
   };
 
   render() {
-    console.log('rendering roster')
-    console.log(localStorage.getItem('token'))
+    console.log('rendering roster');
+    console.log(localStorage.getItem('token'));
 
     // if (!document.cookie) {
     //   return <Redirect to="/" />;
@@ -77,6 +78,9 @@ class Roster extends Component {
           >
             <div id="roster">
               <div id="roster-header">Grandpa Roster</div>
+              {!this.state.players || this.state.players.length === 0 ? (
+                <NoPlayers />
+              ) : null}
 
               <Card.Group
                 itemsPerRow={3}
@@ -86,7 +90,7 @@ class Roster extends Component {
                   overflow: 'auto',
                 }}
               >
-                {!this.state.players
+                {!this.state.players || this.state.players.length === 0
                   ? null
                   : this.state.players.map(player => (
                     <RosterCard

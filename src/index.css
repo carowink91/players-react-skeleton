@@ -39,9 +39,8 @@ a.text {
 .top-left {
   font-size: 8vmin;
   overflow: auto;
-  background-color: rgb(56, 65, 93);
+  background-color: rgba(56, 65, 93, 0.8);
   border-radius: 5px;
-  opacity: 0.9;
   margin-top: 10vh;
   max-height: 30vh;
   z-index: -1;
@@ -50,9 +49,8 @@ a.text {
 
 .bottom-left {
   font-size: 4vmin;
-  background-color: rgb(56, 65, 93);
+  background-color: rgba(56, 65, 93, 0.8);
   border-radius: 5px;
-  opacity: 0.9;
   margin-top: 5vh;
   max-height: 30vh;
   max-width: 35vw;
@@ -60,9 +58,8 @@ a.text {
 
 .top-right {
   font-size: 4vmin;
-  background-color: rgb(56, 65, 93);
+  background-color: rgba(56, 65, 93, 0.8);
   border-radius: 5px;
-  opacity: 0.9;
   margin-top: 10vh;
   max-height: 30vh;
   max-width: 35vw;
@@ -70,9 +67,8 @@ a.text {
 
 .bottom-right {
   font-size: 2.5vmin;
-  background-color: rgb(56, 65, 93);
+  background-color: rgba(56, 65, 93, 0.8);
   border-radius: 5px;
-  opacity: 0.9;
   margin-top: 5vh;
   max-height: 30vh;
 }
@@ -181,6 +177,21 @@ a.text {
   width: 100%;
 
   /* margin-left: 3vw; */
+}
+
+.no-players {
+  margin-top: 15vh;
+  text-shadow: 3px 3px 3px rgb(56, 65, 93);
+
+  /* background-color: rgba(245, 245, 245, 0.5); */
+}
+
+#no-players-header {
+  font-size: 5em;
+}
+
+#no-players-sub {
+  font-size: 2em;
 }
 
 #r-background {
@@ -333,6 +344,7 @@ div.default.text {
 
 .instructions-detail {
   min-height: 2em;
-  color: rgb(179, 201, 218)
+  color: rgb(179, 201, 218);
+
   /* color: rgb(56, 65, 93); */
 }
