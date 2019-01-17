@@ -37,7 +37,6 @@ class Login extends Component {
     }
   };
 
-  // ORIGINAL HANDLE SUBMIT()
   handleSubmit = (event) => {
     event.preventDefault();
     this.setState({ showErrors: false });
@@ -52,7 +51,6 @@ class Login extends Component {
     }
   };
 
-  // ORIGINAL LOGIN()
   login = (payload) => {
     fetchLogin(payload, (errors, response, body) => {
       const res = JSON.parse(body);
