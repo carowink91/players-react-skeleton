@@ -1,4 +1,10 @@
 # Alchemy React Test
+- git clone
+- npm install
+- npm start
+- to view a pre-filled roster, login with:
+  email: jim@bob.com
+  password: foobar
 
 ## Background
 The engineering team at Alchemy has built an (imaginary) game management platform.
