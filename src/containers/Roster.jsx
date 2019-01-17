@@ -15,23 +15,23 @@ class Roster extends Component {
   }
 
   componentDidMount() {
-    // let token = document.cookie.split("=")[1]
+    this.getPlayers();
+  }
+
+  getPlayers = () => {
     const token = localStorage.getItem('token');
-    fetchGetPlayers(token, (errors, response, body) => {
-      const { players } = JSON.parse(body);
+    fetchGetPlayers(token).then((data) => {
       this.setState({
-        players,
+        players: data.players,
       });
     });
-  }
+  };
 
   deletePlayer = (event) => {
     const token = localStorage.getItem('token');
     const playerID = event.target.dataset.id;
-
-    fetchDeletePlayer(token, playerID, (errors, response, body) => {
-      const res = JSON.parse(body);
-      if (res.success) {
+    fetchDeletePlayer(playerID, token).then((data) => {
+      if (data.success) {
         this.deletePlayerFromState(playerID);
       }
     });

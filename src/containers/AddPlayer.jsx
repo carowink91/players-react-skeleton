@@ -25,6 +25,19 @@ class AddPlayer extends Component {
     };
   }
 
+  setRequestError = (error) => {
+    if (error === 'Resource already exists.') {
+      this.setState({
+        requestError:
+          'This first name / last name combo is alredy in use. Please try another name combination.',
+      });
+    } else if (error === 'Invalid value for rating') {
+      this.setState({
+        requestError: 'Rating must contain 1-4 digits only.',
+      });
+    }
+  };
+
   handleChange = (event) => {
     if (event.target.value !== '') {
       this.setState({
@@ -71,32 +84,18 @@ class AddPlayer extends Component {
   };
 
   postNewPlayer = (payload) => {
-    fetchPostNewPlayer(payload, (errors, response, body) => {
-      const res = JSON.parse(body);
-
-      if (res.success) {
+    const token = localStorage.getItem('token');
+    fetchPostNewPlayer(payload, token).then((data) => {
+      if (data.success) {
         this.props.history.push('/roster');
       } else {
         this.setState({
           showErrors: true,
         });
-        this.setRequestError(res.error.message);
+        this.setRequestError(data.error.message);
       }
     });
   };
-
-  setRequestError(error) {
-    if (error === 'Resource already exists.') {
-      this.setState({
-        requestError:
-          'This first name / last name combo is alredy in use. Please try another name combination.',
-      });
-    } else if (error === 'Invalid value for rating') {
-      this.setState({
-        requestError: 'Rating must contain 1-4 digits only.',
-      });
-    }
-  }
 
   cancel = () => this.props.history.push('/roster');
 

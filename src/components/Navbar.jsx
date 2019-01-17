@@ -18,8 +18,8 @@ const Navbar = props => (
       <a href="/wager">Wager a Grandpa</a>
     </div>
 
-    <div className="navlink bottom" onClick={props.logout}>
-      <a href="/">logout</a>
+    <div className="navlink bottom">
+      <a onClick={() => props.logout()} href="/">logout</a>
     </div>
   </div>
 );

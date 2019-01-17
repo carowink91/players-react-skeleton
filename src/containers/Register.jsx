@@ -65,12 +65,10 @@ class Register extends Component {
   };
 
   register = (payload) => {
-    fetchPostNewUser(payload, (errors, response, body) => {
-      const res = JSON.parse(body);
-      // if successful, store jwt in localStorage
-      if (res.success) {
-        localStorage.setItem('token', res.token);
-        this.props.setUser(res.user);
+    fetchPostNewUser(payload).then((data) => {
+      if (data.success) {
+        localStorage.setItem('token', data.token);
+        this.props.setUser(data.user);
       } else {
         this.setState({
           showErrors: true,

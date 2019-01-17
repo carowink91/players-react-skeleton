@@ -1,52 +1,48 @@
-import request from 'request';
-
 const URL = 'https://players-api.developer.alchemy.codes/api';
 
-export function fetchLogin(payload, func) {
-  const options = {
-    url: `${URL}/login`,
+export function fetchLogin(payload) {
+  return fetch(`${URL}/login`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    form: payload,
-  };
-  return request(options, func);
+    body: JSON.stringify(payload),
+  }).then(res => res.json());
 }
 
-export function fetchPostNewPlayer(payload, func) {
-  const token = localStorage.getItem('token');
-  const options = {
-    url: `${URL}/players`,
-    method: 'POST',
-    headers: { Authorization: `Bearer ${token}` },
-    form: payload,
-  };
-  return request(options, func);
-}
-
-export function fetchPostNewUser(payload, func) {
-  const options = {
-    url: `${URL}/user`,
+export function fetchPostNewUser(payload) {
+  return fetch(`${URL}/user`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    form: payload,
-  };
-  return request(options, func);
+    body: JSON.stringify(payload),
+  }).then(res => res.json());
 }
 
-export function fetchGetPlayers(token, func) {
-  const options = {
-    url: `${URL}/players`,
+export function fetchPostNewPlayer(payload, token) {
+  return fetch(`${URL}/players`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify(payload),
+  }).then(res => res.json());
+}
+
+export function fetchGetPlayers(token) {
+  return fetch(`${URL}/players`, {
     method: 'GET',
-    headers: { Authorization: `Bearer ${token}` },
-  };
-  return request(options, func);
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+    },
+  }).then(res => res.json());
 }
 
-export function fetchDeletePlayer(token, playerID, func) {
-  const options = {
-    url: `${URL}/players/${playerID}`,
+export function fetchDeletePlayer(playerID, token) {
+  return fetch(`${URL}/players/${playerID}`, {
     method: 'DELETE',
-    headers: { Authorization: `Bearer ${token}` },
-  };
-  return request(options, func);
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+    },
+  }).then(res => res.json());
 }

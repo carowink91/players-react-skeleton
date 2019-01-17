@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 class RegistrationErrors extends Component {
   constructor(props) {
     super(props);
+    this.state = { title: 'Errors' };
   }
 
   getEmptyFields = () => {
@@ -20,7 +21,7 @@ class RegistrationErrors extends Component {
   render() {
     return (
       <div id="errors">
-        <h3>Errors:</h3>
+        <h3>{this.state.title}:</h3>
         <div>
           {this.getEmptyFields().map(field => (
             <div key={field.length}>{field} cannot be empty.</div>

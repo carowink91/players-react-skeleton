@@ -25,10 +25,9 @@ class WagerInstructions extends Component {
 
   getPlayers = () => {
     const token = localStorage.getItem('token');
-    fetchGetPlayers(token, (errors, response, body) => {
-      const { players } = JSON.parse(body);
+    fetchGetPlayers(token).then((data) => {
       this.setState({
-        players,
+        players: data.players,
       });
     });
   };
@@ -107,24 +106,23 @@ class WagerInstructions extends Component {
 
   loseGrandpas = (id) => {
     const token = localStorage.getItem('token');
-    fetchDeletePlayer(token, id, (errors, response, body) => {
+    fetchDeletePlayer(id, token).then(() => {
       this.getPlayers();
     });
   };
 
   gainGrandpa = () => {
     const randomNum = (Math.floor(Math.random() * 9999999) + 1).toString();
+    const token = localStorage.getItem('token');
+
     const body = {
       first_name: randomNum,
       last_name: 'Bonus Grandpa',
       rating: '9999',
       handedness: 'left',
     };
-    fetchPostNewPlayer(body, (errors, response, respBody) => {
-      const res = JSON.parse(respBody);
-      console.log(res);
-      // if Grandpa already exists by this name, retry
-      if (!res.success) {
+    fetchPostNewPlayer(body, token).then((data) => {
+      if (!data.success) {
         this.gainGrandpa();
       }
       this.getPlayers();

@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
 import { Grid } from 'semantic-ui-react';
 import { fetchLogin } from '../Fetches';
-import request from 'request';
 import LoginForm from '../components/LoginForm';
 import RegistrationErrors from '../components/RegistrationErrors';
 
@@ -51,16 +50,13 @@ class Login extends Component {
   };
 
   login = (payload) => {
-    fetchLogin(payload, (errors, response, body) => {
-      const res = JSON.parse(body);
-
-      // if successful, store jwt in localStorage
-      if (res.success) {
-        localStorage.setItem('token', res.token);
-        this.props.setUser(res.user);
+    fetchLogin(payload).then((data) => {
+      if (data.success) {
+        localStorage.setItem('token', data.token);
+        this.props.setUser(data.user);
         this.props.history.push('/roster');
       } else {
-        this.setState({ showErrors: true, requestError: res.error.message });
+        this.setState({ showErrors: true, requestError: data.error.message });
       }
     });
   };
