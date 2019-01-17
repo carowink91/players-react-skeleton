@@ -40,7 +40,6 @@ class Login extends Component {
   handleSubmit = (event) => {
     event.preventDefault();
     this.setState({ showErrors: false });
-    // this.props.history.push('/roster');
 
     // if fields are filled, submit request
     if (this.checkFieldsAreFilled()) {
@@ -59,6 +58,7 @@ class Login extends Component {
       if (res.success) {
         localStorage.setItem('token', res.token);
         this.props.setUser(res.user);
+        this.props.history.push('/roster');
       } else {
         this.setState({ showErrors: true, requestError: res.error.message });
       }
